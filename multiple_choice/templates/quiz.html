@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'multiple_choice/quiz.css' %}?{% now 'U' %}">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open Sans" />
+  <title>Quiz Title</title>
+</head>
+
+<body>
+
+  <div id='container'>
+    <div id='title'>
+      <h1>Quiz</h1>
+    </div>
+    <br />
+    <div id='quiz'></div>
+    <div class='button' id='next'><a href='#'>Next</a></div>
+    <div class='button' id='prev'><a href='#'>Prev</a></div>
+    <div class='button' id='start'> <a href='#'>Start Over</a></div>
+    <!-- <button class='' id='next'>Next</a></button>
+    		<button class='' id='prev'>Prev</a></button>
+    		<button class='' id='start'> Start Over</a></button> -->
+  </div>
+
+  <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
+  <script type='text/javascript' src="{% static 'multiple_choice/quiz.js' %}?{% now 'U' %}"></script>
+  <!-- Credits to for the Quiz HTML and CSS. The JavaScript was changed a little bit. -->
+  <!-- https://codepen.io/gcarino/pen/AaJBOo -->
+</body>
+
+</html>
