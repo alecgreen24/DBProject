@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            color: #292929;
+            font: 90% Roboto, Arial, sans-serif;
+            font-weight: 300;
+        }
+
+        p {
+            padding: 0 10px;
+            line-height: 1.8;
+        }
+
+        ul li {
+            padding-right: 10px;
+            line-height: 1.6;
+        }
+
+        h3 {
+            padding: 5px 20px;
+            margin: 0;
+        }
+
+        div#header {
+            position: relative;
+        }
+
+        div#header h1 {
+            height: 80px;
+            line-height: 80px;
+            margin: 0;
+            padding-left: 10px;
+            background: #e0e0e0;
+            color: #292929;
+        }
+
+        div#header p {
+            position: absolute;
+            right: 0;
+            top: 23px;
+            padding: 10px;
+            color: #006;
+        }
+
+        div#navigation {
+            background: #7cb71c;
+        }
+
+        div#navigation li {
+            list-style: none;
+        }
+
+        div#extra {
+            background: #147FA9;
+        }
+
+        div#footer {
+            background: #42444e;
+            color: #fff;
+        }
+
+        div#footer p {
+            padding: 20px 10px;
+        }
+
+        div#container {
+            width: 700px;
+            margin: 0 auto;
+        }
+
+        div#content {
+            float: left;
+            width: 500px;
+        }
+
+        div#navigation {
+            float: right;
+            width: 200px;
+        }
+
+        div#extra {
+            float: right;
+            clear: right;
+            width: 200px;
+        }
+
+        div#footer {
+            clear: both;
+            width: 100%;
+        }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="header">
+        <h1>Quizlister</h1>
+        <p> Login </p>
+    </div>
+    <div id="wrapper">
+        <div id="content">
+            <h3>Existing Quizzes </h3>
+           <table>
+  <tr>
+    <th>Quiz</th>
+    <th>Creator</th>
+    <th>Date</th>
+  </tr>
+  <tr>
+    <td>Math Modeling Quiz 1</td>
+    <td>Mariano Jalif</td>
+    <td>4/10/2022</td>
+  </tr>
+  <tr>
+    <td>Database Programming Quiz 1</td>
+    <td>Alec Green</td>
+    <td>4/10/2022</td>
+  </tr>
+  <tr>
+    <td>Software Testing Quiz 77</td>
+    <td>Kyler England</td>
+    <td>4/10/2022</td>
+  </tr>
+</table>
+            <h3>Who knows what else</h3>
+            <p> This is an area for some potential text. 
+            </p>
+        </div>
+    </div>
+    <div id="navigation">
+        <h3>Create Quiz</h3>
+        <ul>
+            <li>Quiz with 3 questions</li>
+            <li>Quiz with 5 questions</li>
+            <li>Quiz with custom questions</li>
+        </ul>
+        <h3>Edit Quiz</h3>
+        <ul>
+          <p> Example text </p>
+        </ul>
+    </div>
+    <div id="extra">
+        <h3>What else could we add:</h3>
+        <ul>
+            <li>1. Useful tool</li>
+            <li>2. Useful tool</li>
+            <li>3. Useful tool</li>
+            <li>And more</li>
+        </ul>
+    </div>
+    <div id="footer"><p>Footer</p>
+    </div>
+</div>
+<script type="text/javascript">AddFillerLink("content", "navigation", "extra")</script>
+</body>
+</html>
