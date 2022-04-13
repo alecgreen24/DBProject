@@ -15,10 +15,6 @@ from tkinter import TRUE
 import json
 import os
 from django.core.exceptions import ImproperlyConfigured
-import json
-import os
-from django.core.exceptions import ImproperlyConfigured
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
