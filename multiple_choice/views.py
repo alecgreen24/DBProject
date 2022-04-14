@@ -3,10 +3,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
-from .dao import connect
-from .daos.student import *
+from .dao import connect 
+from .daos.student_dao import *
+from .daos.student import Student
+from group_project.settings import *
 
-
+SDAO = StudentDAO(host=DATABASES['default']['HOST'],
+                database=DATABASES['default']['NAME'],
+                user=DATABASES['default']['USER'],
+                password=DATABASES['default']['PASSWORD'])
 
 # Create your views here.
 def index(request):
@@ -36,10 +41,15 @@ def signup(request):
                 "message": "Passwords must match."
             })
         else:
-            createStudent(username, password)
-            return render(request, "signup.html", {
-                "message": "Success creating the student."
-            })
+            new_student = Student(username, password)
+            response = SDAO.createStudent(new_student)
+            if response == "success":
+                request.session['username'] = new_student.username
+                return HttpResponseRedirect(reverse("tests"))
+            else:
+                return render(request, "main.html", {
+                    "message": response
+                })
         # Attempt to create new user
         # try:
         #     connect('INSERT INTO student {username} ')
@@ -51,3 +61,10 @@ def signup(request):
         # return HttpResponseRedirect(reverse("user_extra_info"))
     else:
         return render(request, "signup.html")
+
+
+def tests(request):
+    if not request.session.get('username'):
+        print("NO STUDENT SESSION")
+        return  HttpResponseRedirect(reverse("login"))
+    return render(request, "quiz.html")
