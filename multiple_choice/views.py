@@ -16,19 +16,42 @@ SDAO = StudentDAO(host=DATABASES['default']['HOST'],
 
 # Create your views here.
 def index(request):
-    return HttpResponseRedirect(reverse("signup"))
+    if request.session.get('username'):
+        return HttpResponseRedirect(reverse("menu"))
+    else:
+        return HttpResponseRedirect(reverse("login"))
 
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        if not username:
+            return render(request, "signup.html", {
+                "message": "Username is empty."
+            })
+        elif not(password):
+            return render(request, "signup.html", {
+                "message": "Password can't be empty."
+            })
+        logged_student = Student(username, password)
+        id =  SDAO.checkCredentials(logged_student)
+        if id:
+            request.session['username'] = logged_student.username
+            return HttpResponseRedirect(reverse("menu"))
+
+        return render(request, 'login.html', {
+            "message": "Wrong username or/and passsword."})
     return render(request, 'login.html')
+
 
 
 def signup(request):
     # Register user
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirmation = request.POST.get("confirmation")
         if not username:
             return render(request, "signup.html", {
                 "message": "Username is empty."
@@ -48,24 +71,20 @@ def signup(request):
                 request.session['username'] = new_student.username
                 return HttpResponseRedirect(reverse("menu"))
             else:
-                return render(request, "menu.html", {
+                return render(request, "signup.html", {
                     "message": response
                 })
-        # Attempt to create new user
-        # try:
-        #     connect('INSERT INTO student {username} ')
-        # except IntegrityError:
-        #     return render(request, "capstone/register.html", {
-        #         "message": "Username already taken."
-        #     })
-        # login(request, user)
-        # return HttpResponseRedirect(reverse("user_extra_info"))
     else:
         return render(request, "signup.html")
+
+def logout(request):
+    if request.session.get('username'):
+        del request.session['username']
+    return HttpResponseRedirect(reverse("login"))
 
 
 def menu(request):
     if not request.session.get('username'):
         print("NO STUDENT SESSION")
         return  HttpResponseRedirect(reverse("login"))
-    return render(request, "menu.html")
+    return render(request, "list.html")
