@@ -1,8 +1,5 @@
 from django.shortcuts import render
-<<<<<<< HEAD
 from django.http import HttpResponse
-=======
->>>>>>> 31a03c1549ef17a9c242915bb98d4edcbf1b9a41
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.urls import reverse
@@ -49,9 +46,9 @@ def signup(request):
             response = SDAO.createStudent(new_student)
             if response == "success":
                 request.session['username'] = new_student.username
-                return HttpResponseRedirect(reverse("tests"))
+                return HttpResponseRedirect(reverse("menu"))
             else:
-                return render(request, "main.html", {
+                return render(request, "menu.html", {
                     "message": response
                 })
         # Attempt to create new user
@@ -67,8 +64,8 @@ def signup(request):
         return render(request, "signup.html")
 
 
-def tests(request):
+def menu(request):
     if not request.session.get('username'):
         print("NO STUDENT SESSION")
         return  HttpResponseRedirect(reverse("login"))
-    return render(request, "quiz.html")
+    return render(request, "menu.html")
