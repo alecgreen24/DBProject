@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <nav>
+    <link rel="stylesheet" href="{% static 'multiple_choice/menu.css' %}">
+    <a href="templates/main">Home</a>
+    <a href="/newTest">Add Test</a>
+    <a href="#">Take Test</a>
+    <a href="#">History</a>
+    <a href="#">Account</a>
+  </nav>
+
+  <div class = "wrapper">
+  {% block content %}
+  {% endblock %}
+  </div>
+  
+  </html>

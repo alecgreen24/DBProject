@@ -1,4 +1,8 @@
 from django.shortcuts import render
+<<<<<<< HEAD
+from django.http import HttpResponse
+=======
+>>>>>>> 31a03c1549ef17a9c242915bb98d4edcbf1b9a41
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.urls import reverse
