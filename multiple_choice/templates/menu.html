@@ -3,11 +3,11 @@
 <html>
   <nav>
     <link rel="stylesheet" href="{% static 'multiple_choice/menu.css' %}">
-    <a href="templates/main">Home</a>
-    <a href="/newTest">Add Test</a>
-    <a href="#">Take Test</a>
-    <a href="#">History</a>
-    <a href="#">Account</a>
+    <a href="{% url 'new_test' %}">Add Test</a>
+    <a href="{% url 'edit_test' %}">Edit Test</a>
+    <a href="{% url 'take_test' %}">Take Test</a>
+    <a href="{% url 'list' %}">History</a>
+    <a href="{% url 'account_info' %}">Account</a>
   </nav>
 
   <div class = "wrapper">
