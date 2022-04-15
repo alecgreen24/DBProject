@@ -50,4 +50,4 @@ def signup(request):
         # login(request, user)
         # return HttpResponseRedirect(reverse("user_extra_info"))
     else:
-        return render(request, "signup.html")
+        return render(request, "newTest.html")
