@@ -1,18 +1,25 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
-  <nav>
-    <link rel="stylesheet" href="{% static 'multiple_choice/menu.css' %}">
-    <a href="templates/main">Home</a>
-    <a href="/newTest">Add Test</a>
-    <a href="#">Take Test</a>
-    <a href="#">History</a>
-    <a href="#">Account</a>
-  </nav>
 
-  <div class = "wrapper">
+<head>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'multiple_choice/menu.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <title>Sign in</title>
+</head>
+<nav>
+  <a href="templates/main">Home</a>
+  <a href="/newTest">Add Test</a>
+  <a href="#">Take Test</a>
+  <a href="#">History</a>
+  <a href="{% url 'logout' %}">Log Out</a>
+</nav>
+
+<div class="wrapper">
   {% block content %}
   {% endblock %}
-  </div>
-  
-  </html>
+</div>
+
+</html>
