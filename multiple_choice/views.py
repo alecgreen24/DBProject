@@ -64,16 +64,15 @@ def signup(request):
             return render(request, "signup.html", {
                 "message": "Passwords must match."
             })
+        new_student = Student(username, password)
+        response = SDAO.createStudent(new_student)
+        if response == "success":
+            request.session['username'] = new_student.username
+            return HttpResponseRedirect(reverse("menu"))
         else:
-            new_student = Student(username, password)
-            response = SDAO.createStudent(new_student)
-            if response == "success":
-                request.session['username'] = new_student.username
-                return HttpResponseRedirect(reverse("menu"))
-            else:
-                return render(request, "signup.html", {
-                    "message": response
-                })
+            return render(request, "signup.html", {
+                "message": response
+            })
     else:
         return render(request, "signup.html")
 
