@@ -75,7 +75,6 @@ def signup(request):
                     "message": response
                 })
     else:
-<<<<<<< HEAD
         return render(request, "addTest.html")
 
 
@@ -93,7 +92,6 @@ def account(request):
 
 def take_test(request):
     return render(request, "take_test.html")
-=======
         return render(request, "signup.html")
 
 def logout(request):
@@ -107,4 +105,3 @@ def menu(request):
         print("NO STUDENT SESSION")
         return  HttpResponseRedirect(reverse("login"))
     return render(request, "list.html")
->>>>>>> 4e82924e88cdea56f7468dbf84617799c5e95b8b
