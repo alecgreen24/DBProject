@@ -16,10 +16,10 @@
 
 <body>
   <div class="main">
-    <form class="form1">
-      <input class="un " type="text" align="center" placeholder="Test Name">
-      <input class="pass" type="password" align="center" placeholder="Test Type">
-      <a class="submit" align="center">Create</a>
+    <form class="form1" action="{% url 'new_test' %}" method="post">
+      {% csrf_token %}
+      <input name="title" class="un " type="text" align="center" placeholder="Test Title">
+      <button class="submit" align="center">Create</button>
   </div>
 
 </body>

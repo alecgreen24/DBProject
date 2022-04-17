@@ -4,8 +4,5 @@ class Student():
         self.id = None
         self.username = username
         self.password = password
-    
 
-    def setId(self, id):
-        self.id = id
 

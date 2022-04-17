@@ -15,7 +15,7 @@ SDAO = StudentDAO(host=DATABASES['default']['HOST'],
                 password=DATABASES['default']['PASSWORD'])
 
 def list(request):
-    if not request.session.get('username'):
+    if not request.session.get('id'):
         print("NO STUDENT SESSION")
         return  HttpResponseRedirect(reverse("login"))
     return render(request, "list.html")
@@ -23,7 +23,7 @@ def list(request):
 
 
 def index(request):
-    if request.session.get('username'):
+    if request.session.get('id'):
         return HttpResponseRedirect(reverse("list"))
     else:
         return HttpResponseRedirect(reverse("login"))
@@ -47,7 +47,8 @@ def login(request):
         logged_student = Student(username, password)
         id =  SDAO.checkCredentials(logged_student)
         if id:
-            request.session['username'] = logged_student.username
+            logged_student.id = id
+            request.session['id'] = logged_student.id
             return HttpResponseRedirect(reverse("list"))
 
         return render(request, 'login.html', {
@@ -75,19 +76,24 @@ def signup(request):
                 "message": "Passwords must match."
             })
         new_student = Student(username, password)
-        response = SDAO.createStudent(new_student)
-        if response == "success":
-            request.session['username'] = new_student.username
-            return HttpResponseRedirect(reverse("menu"))
+        id = SDAO.createStudent(new_student)
+        if isinstance(id, int):
+            new_student.id = id
+            request.session['id'] = new_student.id
+            return HttpResponseRedirect(reverse("list"))
         else:
+            error_message = id
             return render(request, "signup.html", {
-                "message": response
+                "message": error_message
             })
     else:
-        return render(request, "addTest.html")
+        return render(request, "signup.html")
 
 
-def new(request):
+def new_test(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+
     return render(request, "new_test.html")
 
 def edit(request):
@@ -100,6 +106,6 @@ def take_test(request):
     return render(request, "take_test.html")
 
 def logout(request):
-    if request.session.get('username'):
-        del request.session['username']
+    if request.session.get('id'):
+        del request.session['id']
     return HttpResponseRedirect(reverse("login"))

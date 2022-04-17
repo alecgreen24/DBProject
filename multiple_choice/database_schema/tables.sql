@@ -15,7 +15,7 @@ CREATE TABLE student(
 
 CREATE TABLE test(
     id SERIAL,
-    creator INTEGER REFERENCES student(id),
+    creator_id INTEGER REFERENCES student(id),
     title varchar(255) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     active BOOLEAN NOT NULL,
