@@ -75,7 +75,7 @@ def signup(request):
                     "message": response
                 })
     else:
-        return render(request, "addTest.html")
+        return render(request, "add_test.html")
 
 
 def new(request):
@@ -92,7 +92,7 @@ def account(request):
 
 def take_test(request):
     return render(request, "take_test.html")
-        return render(request, "signup.html")
+        
 
 def logout(request):
     if request.session.get('username'):
