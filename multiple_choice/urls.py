@@ -12,4 +12,5 @@ urlpatterns = [
     path('edit_test', views.edit, name="edit_test"),
     path('list', views.list, name="list"),
     path('account_info', views.account, name="account_info"),
+    path('add_questions', views.addquestions, name= "add_questions"),
 ]

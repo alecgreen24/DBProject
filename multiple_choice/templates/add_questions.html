@@ -1,0 +1,100 @@
+{% extends "menu.html" %}
+{% load static %}
+
+{% block content%}
+<head>
+  <link rel="stylesheet" href="{% static 'multiple_choice/login.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <title>Quiz Maker</title>
+
+  <script type='text/javascript'>
+      function addField(){
+
+        // Generate a dynamic number of inputs
+        var number = document.getElementById("number").value;
+
+        // Gets element where the inputs will be added to
+        var containter = document.getElementById("fullquestion");
+
+        // Remove all the children it had before
+        while(containter.hasChildNodes()){
+            containter.removeChild(containter.lastChild);
+        }
+
+        for(i =0; i<number; i++){
+
+            // Append a node with a random text
+            containter.appendChild(document.createTextNode("Question " + (i+1)))
+
+            // Create elements we want and set their name and type attributes
+            
+            var question = document.createElement("input");
+            question.type = "text";
+            question.name = "userquestion" +i;
+            question.id = "userquestion" +i;
+            containter.appendChild(question);
+            container.appendChild(document.createElement('br'));
+
+            containter.appendChild(document.createTextNode("Correct answer " + (i+1)))
+            var answer = document.createElement("input");
+            answer.type = "text";
+            answer.name = "correctanswer" +i;
+            answer.id = "correctanswer" +i;
+            containter.appendChild(answer);
+            container.appendChild(document.createElement("br"));
+
+            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
+            var firstIC = document.createElement("input");
+            firstIC.type = "text";
+            firstIC.name = "incorrectfirst" +i;
+            firstIC.id = "incorrectfirst" +i;
+            containter.appendChild(firstIC);
+            container.appendChild(document.createElement("br"));
+
+            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
+            var secondIC = document.createElement("input");
+            secondIC.type = "text";
+            secondIC.name = "incorrectsecond" +i;
+            secondIC.id = "incorrectsecond" +i;
+            containter.appendChild(secondIC);
+            container.appendChild(document.createElement("br"));
+
+            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
+            var thirdIC = document.createElement("input");
+            thirdIC.type = "text";
+            thirdIC.name = "incorrectthird" +i;
+            thirdIC.id = "incorrectthird" +i;
+            containter.appendChild(thirdIC);
+            container.appendChild(document.createElement("br"));
+        }
+      }
+  </script>
+</head>
+
+<h2 class="sign" align="center">Add Quiz Questions</h2>
+<body>
+    <div class="main" id="container">
+        <form class="formQuestions" method="post">
+            <div id="fullquestion">
+                <!-- <label for="userquestion">Question</label>
+                <input type="text" name="userquestion" id="userquestion">
+                <br>
+                <label for="correctanswer">Correct Answer</label>
+                <input type="text" name="correctanswer" id="correctanswer">
+                <br>
+                <label for="incorrect1">Incorrect Answer 1</label>
+                <input type="text" name="incorrectfirst" id="incorrectfirst">
+                <label for="incorrect2">Incorrect Answer 2</label>
+                <input type="text" name="incorrectsecond" id="incorrectsecond">
+                <label for="incorrect3">Incorrect Answer 3</label>
+                <input type="text" name="incorrectthird" id="incorrectthird"> -->
+
+                <input type="text" id="number" name="number" value="">Number of members: (max. 10)<br />
+                <a href="#" id="filldetails" onclick="addField()">How many questions do you want?</a>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}
