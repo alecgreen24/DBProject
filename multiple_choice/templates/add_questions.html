@@ -1,100 +1,120 @@
-{% extends "menu.html" %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content%}
 <head>
-  <link rel="stylesheet" href="{% static 'multiple_choice/login.css' %}">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-  <title>Quiz Maker</title>
-
-  <script type='text/javascript'>
-      function addField(){
-
-        // Generate a dynamic number of inputs
-        var number = document.getElementById("number").value;
-
-        // Gets element where the inputs will be added to
-        var containter = document.getElementById("fullquestion");
-
-        // Remove all the children it had before
-        while(containter.hasChildNodes()){
-            containter.removeChild(containter.lastChild);
-        }
-
-        for(i =0; i<number; i++){
-
-            // Append a node with a random text
-            containter.appendChild(document.createTextNode("Question " + (i+1)))
-
-            // Create elements we want and set their name and type attributes
-            
-            var question = document.createElement("input");
-            question.type = "text";
-            question.name = "userquestion" +i;
-            question.id = "userquestion" +i;
-            containter.appendChild(question);
-            container.appendChild(document.createElement('br'));
-
-            containter.appendChild(document.createTextNode("Correct answer " + (i+1)))
-            var answer = document.createElement("input");
-            answer.type = "text";
-            answer.name = "correctanswer" +i;
-            answer.id = "correctanswer" +i;
-            containter.appendChild(answer);
-            container.appendChild(document.createElement("br"));
-
-            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
-            var firstIC = document.createElement("input");
-            firstIC.type = "text";
-            firstIC.name = "incorrectfirst" +i;
-            firstIC.id = "incorrectfirst" +i;
-            containter.appendChild(firstIC);
-            container.appendChild(document.createElement("br"));
-
-            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
-            var secondIC = document.createElement("input");
-            secondIC.type = "text";
-            secondIC.name = "incorrectsecond" +i;
-            secondIC.id = "incorrectsecond" +i;
-            containter.appendChild(secondIC);
-            container.appendChild(document.createElement("br"));
-
-            containter.appendChild(document.createTextNode("Incorrect answer for question " + (i+1)))
-            var thirdIC = document.createElement("input");
-            thirdIC.type = "text";
-            thirdIC.name = "incorrectthird" +i;
-            thirdIC.id = "incorrectthird" +i;
-            containter.appendChild(thirdIC);
-            container.appendChild(document.createElement("br"));
-        }
-      }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <link rel="stylesheet" href="style.css">
+  {% load static %}
+  <title>Quiz Generator</title>
 </head>
 
-<h2 class="sign" align="center">Add Quiz Questions</h2>
 <body>
-    <div class="main" id="container">
-        <form class="formQuestions" method="post">
-            <div id="fullquestion">
-                <!-- <label for="userquestion">Question</label>
-                <input type="text" name="userquestion" id="userquestion">
-                <br>
-                <label for="correctanswer">Correct Answer</label>
-                <input type="text" name="correctanswer" id="correctanswer">
-                <br>
-                <label for="incorrect1">Incorrect Answer 1</label>
-                <input type="text" name="incorrectfirst" id="incorrectfirst">
-                <label for="incorrect2">Incorrect Answer 2</label>
-                <input type="text" name="incorrectsecond" id="incorrectsecond">
-                <label for="incorrect3">Incorrect Answer 3</label>
-                <input type="text" name="incorrectthird" id="incorrectthird"> -->
-
-                <input type="text" id="number" name="number" value="">Number of members: (max. 10)<br />
-                <a href="#" id="filldetails" onclick="addField()">How many questions do you want?</a>
-            </div>
-        </form>
+  <!-- Navigation bar -->
+  <nav>
+    <div class="nav-wrapper green lighten-2 class">
+      <a href="#" class="brand-logo center">{{new_test.title}}</a>
     </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container" id="container">
+    <!-- Configue Quiz -->
+    <div class="row" id="quizConfig">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col m6 s12">
+            <input placeholder="1 - 100" id="qTotal" type="number" class="validate">
+            <label for="questions">Number of questions to create</label>
+          </div>
+        </div>
+      </form>
+      <!-- Create questions -->
+      <div class="col s6">
+        <a id="generateBtn" class="waves-effect waves-light btn-small">Generate Form</a>
+      </div>
+    </div>
+
+    <!-- Quiz Form -->
+    <div id="formContainer" class="row hide">
+      <form id="quizForm" class="col s12">
+        <!-- Title -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="title" placeholder="Enter the question" type="text" class="validate">
+            <label for="question_title">Question Title</label>
+          </div>
+        </div>
+        <!-- User Input 1 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input1" placeholder="Enter answer" type="text" class="validate">
+            <label>Option A</label>
+          </div>
+        </div>
+        <!-- User Input 2 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input2" placeholder="Enter answer" type="text" class="validate">
+            <label>Option B</label>
+          </div>
+        </div>
+
+        <!--User Input 3 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input3" placeholder="Enter answer" type="text" class="validate">
+            <label>Option C</label>
+          </div>
+        </div>
+
+        <!--Correct Answer-->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="correctValue" placeholder="Enter the correct answer. A,B,C?" type="text" class="validate">
+            <label>Correct Answer</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div id="submitBtn" class="col s6">
+          <a id="submit" class="waves-effect waves-light btn-small">Add to bank</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Quiz -->
+    <form id="quiz" class="hide" action="#">
+      <h5 id="qTitle"></h5>
+      <!-- Choice 1 -->
+      <p>
+        <label>
+          <input id="check1" class="with-gap" type="radio" name='choices' value="A" />
+          <span id="option1"></span>
+        </label>
+      </p>
+      <!-- Choice 2 -->
+      <p>
+        <label>
+          <input id="check2" class="with-gap" type="radio" name='choices' value="B" />
+          <span id="option2"></span>
+        </label>
+      </p>
+      <!-- Choice 3 -->
+      <p>
+        <label>
+          <input id="check3" class="with-gap" type="radio" name='choices' value="C" />
+          <span id="option3"></span>
+        </label>
+      </p>
+      <a id="submitAnswer" class="waves-effect waves-light btn-small">Next Question</a>
+    </form>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script type='text/javascript' src="{% static 'multiple_choice/generate.js' %}?{% now 'U' %}"></script>
 </body>
-{% endblock %}
+
+</html>

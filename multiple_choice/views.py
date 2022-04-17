@@ -7,29 +7,42 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .dao import connect 
 from .daos.student_dao import *
 from .daos.student import Student
+from .daos.test_dao import *
+from .daos.test import Test
 from group_project.settings import *
 
 SDAO = StudentDAO(host=DATABASES['default']['HOST'],
                 database=DATABASES['default']['NAME'],
                 user=DATABASES['default']['USER'],
                 password=DATABASES['default']['PASSWORD'])
+TDAO = TestDAO(host=DATABASES['default']['HOST'],
+                database=DATABASES['default']['NAME'],
+                user=DATABASES['default']['USER'],
+                password=DATABASES['default']['PASSWORD'])
+
+
+def isAuthenticated(request):
+    if request.session.get('id'):
+        return True
+    return render(request, "login.html", {
+        "message": "You must log in to access all functionalities."
+    })
+
 
 def list(request):
-    if not request.session.get('id'):
-        print("NO STUDENT SESSION")
-        return  HttpResponseRedirect(reverse("login"))
-    return render(request, "list.html")
+    if isAuthenticated(request):
+        return render(request, "list.html")
 
 
 
 def index(request):
-    if request.session.get('id'):
+    if isAuthenticated(request):
         return HttpResponseRedirect(reverse("list"))
-    else:
-        return HttpResponseRedirect(reverse("login"))
+    
 
 def addquestions(request):
-    return render(request, "add_questions.html")
+    if isAuthenticated(request):
+        return render(request, "add_questions.html")
 
 
 def login(request):
@@ -50,7 +63,6 @@ def login(request):
             logged_student.id = id
             request.session['id'] = logged_student.id
             return HttpResponseRedirect(reverse("list"))
-
         return render(request, 'login.html', {
             "message": "Wrong username or/and passsword."})
     return render(request, 'login.html')
@@ -81,20 +93,26 @@ def signup(request):
             new_student.id = id
             request.session['id'] = new_student.id
             return HttpResponseRedirect(reverse("list"))
-        else:
-            error_message = id
-            return render(request, "signup.html", {
-                "message": error_message
-            })
+        error_message = id
+        return render(request, "signup.html", {
+            "message": error_message
+        })
     else:
         return render(request, "signup.html")
 
-
 def new_test(request):
-    if request.method == "POST":
-        title = request.POST.get("title")
-
-    return render(request, "new_test.html")
+    if isAuthenticated(request):
+        if request.method == "POST":
+            title = request.POST.get("title")
+            creator_id = request.session.get('id')
+            new_test = Test(creator_id, title)
+            id = TDAO.createTest(new_test)     
+            if isinstance(id, int):
+                return render(request, "add_questions.html", {"new_test": new_test})
+            return render(request, "new_test.html", {
+                    "message": "There was an error creating the test."})
+        return render(request, "new_test.html")
+        
 
 def edit(request):
     return render(request, "edit_test.html")

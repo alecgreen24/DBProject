@@ -9,7 +9,7 @@ class TestDAO():
 
 
     def createTest(self, test):
-        sql = f"""INSERT INTO test VALUES (DEFAULT, '{test.creator_id}', '{test.title}', NOW(), TRUE, NULL);"""
+        sql = f"""INSERT INTO test VALUES (DEFAULT, '{test.creator_id}', '{test.title}', NOW(), TRUE, NULL) RETURNING id;"""
         conn = None
         try:
             # Establishing the connection

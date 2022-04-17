@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "menu.html" %}
+{% load static %}
+
+{% block content%}
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=, initial-scale=1.0">
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'multiple_choice/list.css' %}?{% now 'U' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'multiple_choice/list.css' %}">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open Sans" />
   <title>Quiz Title</title>
 </head>
 
 
-<body>
-  <div id="container">
+<body style="background-color: #c6e4c2;">
+  <div id="container2">
     <div id="header">
       <h1>Quizlister</h1>
       <p> Login </p>
     </div>
-    <div id="wrapper">
+    <div>
       <div id="content">
         <h3>Existing Quizzes </h3>
         <table>
@@ -43,9 +45,6 @@
             <td>4/10/2022</td>
           </tr>
         </table>
-        <h3>Who knows what else</h3>
-        <p> This is an area for some potential text.
-        </p>
       </div>
     </div>
     <div id="navigation">
@@ -56,9 +55,7 @@
         <li>Quiz with custom questions</li>
       </ul>
       <h3>Edit Quiz</h3>
-      <ul>
-        <p> Example text </p>
-      </ul>
+
     </div>
     <div id="extra">
       <h3>What else could we add:</h3>
@@ -69,13 +66,10 @@
         <li>And more</li>
       </ul>
     </div>
-    <div id="footer">
-      <p>Footer</p>
-    </div>
+  </div>
   </div>
   <script type="text/javascript">
     AddFillerLink("content", "navigation", "extra")
   </script>
 </body>
-
-</html>
+{% endblock %}
