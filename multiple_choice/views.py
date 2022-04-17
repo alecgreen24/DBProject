@@ -15,9 +15,9 @@ SDAO = StudentDAO(host=DATABASES['default']['HOST'],
                 password=DATABASES['default']['PASSWORD'])
 
 def list(request):
-    if not request.session.get('username'):
-        print("NO STUDENT SESSION")
-        return  HttpResponseRedirect(reverse("login"))
+   # if not request.session.get('username'):
+   #     print("NO STUDENT SESSION")
+   #     return  HttpResponseRedirect(reverse("login"))
     return render(request, "list.html")
 
 
