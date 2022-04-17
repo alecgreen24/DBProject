@@ -28,6 +28,9 @@ def index(request):
     else:
         return HttpResponseRedirect(reverse("login"))
 
+def addquestions(request):
+    return render(request, "add_questions.html")
+
 
 def login(request):
     if request.method == 'POST':
