@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="stylesheet" href="style.css">
   {% load static %}
   <title>Quiz Generator</title>
@@ -16,9 +17,9 @@
   <nav>
     <div class="nav-wrapper green lighten-2 class">
       <a href="#" class="brand-logo center">{{new_test.title}}</a>
+      <a id="test_id">{{new_test.id}}</a>
     </div>
   </nav>
-
   <!-- Main Content -->
   <div class="container" id="container">
     <!-- Configue Quiz -->
@@ -31,6 +32,8 @@
           </div>
         </div>
       </form>
+
+
       <!-- Create questions -->
       <div class="col s6">
         <a id="generateBtn" class="waves-effect waves-light btn-small">Generate Form</a>

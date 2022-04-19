@@ -33,7 +33,7 @@ generateBtn.addEventListener('click', (e) => {
   if (qTotal && qTotal.value) {
     clearConfig();
     renderForm();
-    } else {
+  } else {
     alert('Input fields empty');
   }
 })
@@ -56,24 +56,57 @@ function storeData() {
   console.log(questions);
 }
 
+
+
+// JavaScript function to get cookie by name; retrieved from https://docs.djangoproject.com/en/3.1/ref/csrf/
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 // Submit quiz data to arrays
 submit.addEventListener('click', (e) => {
   if (pos < qTotal.value) {
     storeData();
 
-} else if (pos == qTotal.value) {
-  // Start quiz
-  storeData();
-  alert('Questions Stored!');
-  clearForm();
-  window.location.replace("http://127.0.0.1:8000/multiple_choice/list");
+  } else if (pos == qTotal.value) {
+    // Start quiz
+    storeData();
 
- // displayQuiz();
- // renderQuiz();
+    alert('Questions Stored!');
+    const test_id = document.getElementById('test_id').innerHTML;;
+    console.log("test_id:" + test_id)
 
-} else {
-  // Error Handler
-  alert('Display error');
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_questions',
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+      },
+      data: {
+        'questions[]': questions,
+        'test_id': test_id
+      },
+    });;
+
+    // displayQuiz();
+    // renderQuiz();
+
+  } else {
+    // Error Handler
+    alert('Display error');
   }
 })
 
@@ -98,67 +131,87 @@ function checkAnswer() {
   // Get group name
   choices = document.getElementsByName('choices');
   // Loop through options to check for selected answer
-  for(var i = 0; i < choices.length; i++) {
+  for (var i = 0; i < choices.length; i++) {
     // Get the value of selected answer
-    if(choices[i].checked) {
+    if (choices[i].checked) {
       choice = choices[i].value;
     }
   }
   // Check if value = correct answer
-  if(choice == questions[position][4]) {
+  if (choice == questions[position][4]) {
     correct++;
   } else {
     incorrect++;
   }
   position++;
   quizPos++
- }
+}
 
- // Sumbit Answer
- submitAnswer.addEventListener('click', (e) => {
-   if(quizPos >= questions.length) {
-     checkAnswer();
-     displayResults();
-   } else {
-     checkAnswer();
-     clearQuiz();
-     clearCheckbox();
-     renderQuiz();
-   }
- })
+// Sumbit Answer
+submitAnswer.addEventListener('click', (e) => {
+  if (quizPos >= questions.length) {
+    checkAnswer();
+    displayResults();
+  } else {
+    checkAnswer();
+    clearQuiz();
+    clearCheckbox();
+    renderQuiz();
+  }
+})
 
 // Display results from quiz
- function displayResults() {
-   quiz.innerHTML = '';
-   container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5>';
- }
+function displayResults() {
+  quiz.innerHTML = '';
+  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5>';
+}
 
- // Event Listener - Add checked status
- check1.addEventListener('click', (e) => { check1.checked = true; })
- check2.addEventListener('click', (e) => { check2.checked = true; })
- check3.addEventListener('click', (e) => { check3.checked = true; })
+// Event Listener - Add checked status
+check1.addEventListener('click', (e) => {
+  check1.checked = true;
+})
+check2.addEventListener('click', (e) => {
+  check2.checked = true;
+})
+check3.addEventListener('click', (e) => {
+  check3.checked = true;
+})
 
- // Clear configuration
- const clearConfig = () => { quizConfig.innerHTML = ' ' };
- // Clear form
- const clearForm = () => {  form.classList.add('hide'); }
- // Clear quiz
- const clearQuiz = () => { option1.innerHTML = ''; option2.innerHTML = ''; option3.innerHTML = ''; }
- // Display Quiz
- const displayQuiz = () => { quiz.classList.remove('hide'); }
- // Clear checkboxs
- const clearCheckbox = () => { check1.checked = false; check2.checked = false; check3.checked = false; }
- // Render Form
- const renderForm = () => {
-   const renderForm = document.getElementById('formContainer');
-   formContainer.classList.remove('hide');
-  }
+// Clear configuration
+const clearConfig = () => {
+  quizConfig.innerHTML = ' '
+};
+// Clear form
+const clearForm = () => {
+  form.classList.add('hide');
+}
+// Clear quiz
+const clearQuiz = () => {
+  option1.innerHTML = '';
+  option2.innerHTML = '';
+  option3.innerHTML = '';
+}
+// Display Quiz
+const displayQuiz = () => {
+  quiz.classList.remove('hide');
+}
+// Clear checkboxs
+const clearCheckbox = () => {
+  check1.checked = false;
+  check2.checked = false;
+  check3.checked = false;
+}
+// Render Form
+const renderForm = () => {
+  const renderForm = document.getElementById('formContainer');
+  formContainer.classList.remove('hide');
+}
 
- // Reset form
-  function reset() {
-    form.reset();
-    const labels = [...document.querySelectorAll("label")];
-      labels.forEach((label) => {
-        label.classList.add('active');
-      })
-    }
+// Reset form
+function reset() {
+  form.reset();
+  const labels = [...document.querySelectorAll("label")];
+  labels.forEach((label) => {
+    label.classList.add('active');
+  })
+}

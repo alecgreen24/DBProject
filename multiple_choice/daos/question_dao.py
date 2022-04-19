@@ -1,15 +1,14 @@
 from .connector import *
 
-class TestDAO():
+class QuestionDAO():
     def __init__(self, host, database, user, password):
         self.host = host
         self.database = database
         self.user = user
         self.password = password
 
-
-    def createTest(self, test):
-        sql = f"""INSERT INTO test VALUES (DEFAULT, '{test.creator_id}', '{test.title}', NOW(), TRUE, NULL) RETURNING id;"""
+    def createQuestion(self, question):
+        sql = f"""INSERT INTO question VALUES(DEFAULT,'{question.content}')  RETURNING id;"""
         conn = None
         try:
             # Establishing the connection
@@ -18,7 +17,7 @@ class TestDAO():
             cur = conn.cursor()
             # Execute a statement.
             cur.execute(sql)
-            # Fetch the id of the test created.
+            # Fetch the id of the question created.
             id = cur.fetchone()
             # Commit the changes on the table.
             conn.commit()
@@ -34,9 +33,8 @@ class TestDAO():
             if conn is not None:
                 conn.close()
 
-
-    def getTestTitle(self, test_id):
-        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
+    def deleteQuestion(self, question):
+        sql = f"""DELETE FROM question WHERE username = '{question.username}'"""
         conn = None
         try:
             # Establishing the connection
@@ -45,12 +43,12 @@ class TestDAO():
             cur = conn.cursor()
             # Execute a statement.
             cur.execute(sql)
-            # Fetch the id of the test created.
-            test_id = cur.fetchone()
+            # Commit the changes on the table.
+            conn.commit()
             # Close the communication with the PostgreSQL
             cur.close()
             # Returns the status of the commit if the change was successful.
-            return test_id[0]
+            return "success"
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)

@@ -1,15 +1,14 @@
 from .connector import *
 
-class TestDAO():
+class TestQuestionDAO():
     def __init__(self, host, database, user, password):
         self.host = host
         self.database = database
         self.user = user
         self.password = password
 
-
-    def createTest(self, test):
-        sql = f"""INSERT INTO test VALUES (DEFAULT, '{test.creator_id}', '{test.title}', NOW(), TRUE, NULL) RETURNING id;"""
+    def createTestQuestion(self, test_question):
+        sql = f"""INSERT INTO test_question VALUES('{test_question.test_id}', '{test_question.question_id}')"""
         conn = None
         try:
             # Establishing the connection
@@ -18,14 +17,12 @@ class TestDAO():
             cur = conn.cursor()
             # Execute a statement.
             cur.execute(sql)
-            # Fetch the id of the test created.
-            id = cur.fetchone()
             # Commit the changes on the table.
             conn.commit()
             # Close the communication with the PostgreSQL
             cur.close()
             # Returns the status of the commit if the change was successful.
-            return id[0]
+            return "success"
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
@@ -34,9 +31,8 @@ class TestDAO():
             if conn is not None:
                 conn.close()
 
-
-    def getTestTitle(self, test_id):
-        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
+    def deleteTestQuestion(self, test_question):
+        sql = f"""DELETE FROM test_question WHERE username = '{test_question.test_id} AND {test_question.question_id}'"""
         conn = None
         try:
             # Establishing the connection
@@ -45,12 +41,12 @@ class TestDAO():
             cur = conn.cursor()
             # Execute a statement.
             cur.execute(sql)
-            # Fetch the id of the test created.
-            test_id = cur.fetchone()
+            # Commit the changes on the table.
+            conn.commit()
             # Close the communication with the PostgreSQL
             cur.close()
             # Returns the status of the commit if the change was successful.
-            return test_id[0]
+            return "success"
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
