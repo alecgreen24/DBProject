@@ -35,8 +35,8 @@ class TestDAO():
                 conn.close()
 
 
-    def getTestTitle(self, test_id):
-        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
+    def getTestTitle(self, test):
+        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test.id}'"""
         conn = None
         try:
             # Establishing the connection
@@ -60,20 +60,9 @@ class TestDAO():
         finally:
             if conn is not None:
                 conn.close()
-
-def selectTest(self, test):
-        sql = f"""SELECT q.id as question_id, 
-                q.content as question_content,  
-                qa.answer_id, 
-                answer.content as answer_content 
-                FROM question q
-                JOIN question_answer qa
-                ON q.id = qa.question_id
-                JOIN answer
-                ON qa.answer_id =  answer.id
-                WHERE q.id IN (SELECT question_id
-                FROM test_question
-                WHERE test_id = '{test.id}');"""
+    
+    def selectTests(self, test):
+        sql = f"""SELECT * FROM test;"""
         conn = None
         try:
             # Establishing the connection
@@ -83,7 +72,7 @@ def selectTest(self, test):
             # Execute a statement.
             cur.execute(sql)
             # Fetch the id of the test created.
-            id = cur.fetchall()
+            id = cur.fetchone()
             # Commit the changes on the table.
             conn.commit()
             # Close the communication with the PostgreSQL
@@ -96,4 +85,4 @@ def selectTest(self, test):
             return error
         finally:
             if conn is not None:
-                conn.close()
+                conn.close()  
