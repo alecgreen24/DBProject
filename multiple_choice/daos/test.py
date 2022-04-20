@@ -1,6 +1,3 @@
-from turtle import title
-
-
 class Test():
     def __init__(self, creator_id, title, active=True):
         self.id = None
@@ -8,4 +5,3 @@ class Test():
         self.title = title
         self.active = active
         self.updated_at = None
-

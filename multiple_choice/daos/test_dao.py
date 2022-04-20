@@ -34,8 +34,9 @@ class TestDAO():
             if conn is not None:
                 conn.close()
 
-    def deleteTest(self, test):
-        sql = f"""DELETE FROM test WHERE id = '{test.id}'"""
+
+    def getTestTitle(self, test_id):
+        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
         conn = None
         try:
             # Establishing the connection
@@ -44,12 +45,12 @@ class TestDAO():
             cur = conn.cursor()
             # Execute a statement.
             cur.execute(sql)
-            # Commit the changes on the table.
-            conn.commit()
+            # Fetch the id of the test created.
+            test_id = cur.fetchone()
             # Close the communication with the PostgreSQL
             cur.close()
             # Returns the status of the commit if the change was successful.
-            return "success"
+            return test_id[0]
 
     
 
