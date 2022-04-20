@@ -52,7 +52,7 @@ class TestDAO():
             # Create the test objects in order to return the data in a more structured way
             test_objs = []
             for row in rows:
-                test = Test(row[1], row[2], row[3])
+                test = Test(id = row[0], creator_id = row[1], title = row[2], created_at = row[3])
                 test_objs.append(test)
             # Close the communication with the PostgreSQL
             cur.close()
