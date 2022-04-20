@@ -8,11 +8,10 @@ class TakenDAO():
         self.database = database
         self.user = user
         self.password = password
-        self.test_id = test_id
-        self.student_id = student_id
+
 
     def createTaken(self, taken):
-        sql = f"""INSERT INTO taken VALUES(DEFAULT,'{taken.test_id}', '{taken.student_id}')  RETURNING id;"""
+        sql = f"""INSERT INTO taken VALUES(DEFAULT,'{taken.test_id}', '{taken.student_id}', '{taken.score}', NOW())  RETURNING id;"""
         conn = None
         try:
             # Establishing the connection
