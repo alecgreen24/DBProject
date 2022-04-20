@@ -3,9 +3,11 @@ from group_project.settings import *
 
 
 class TakenDAO():
-    def __init__(self, host, database, test_id, student_id):
+    def __init__(self, host, database, user, password, test_id, student_id):
         self.host = host
         self.database = database
+        self.user = user
+        self.password = password
         self.test_id = test_id
         self.student_id = student_id
 
