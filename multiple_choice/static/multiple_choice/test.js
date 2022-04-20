@@ -27,24 +27,14 @@ const questions = [];
 let correct = 0;
 let incorrect = 0;
 
-// Generate questions & options for quiz
-generateBtn.addEventListener('click', (e) => {
-  // Check input fields have value
-  if (qTotal && qTotal.value) {
-    clearConfig();
-    renderForm();
-  } else {
-    alert('Input fields empty');
-  }
-})
 
 function storeData() {
   // Get values
-  const title = document.getElementById('title').value;
-  const input1 = document.getElementById('input1').value;
-  const input2 = document.getElementById('input2').value;
-  const input3 = document.getElementById('input3').value;
-  const value = document.getElementById('correctValue').value;
+  const title = "Test Test";
+  const input1 = "Option A";
+  const input2 = "Option B";
+  const input3 = "Option C";
+  const value = "Option B";
   // Append to array
   questions.push([title, input1, input2, input3, value]);
   // Increase position in form
@@ -74,43 +64,11 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-
-// Submit quiz data to arrays
-submit.addEventListener('click', (e) => {
-  if (pos < qTotal.value) {
-    storeData();
-
-  } else if (pos == qTotal.value) {
-    // Start quiz
-    storeData();
-
-    alert('Questions Stored!');
-    const test_id = document.getElementById('test_id').innerHTML;;
-    console.log("test_id:" + test_id)
-
-
-    $.ajax({
-      type: 'POST',
-      url: 'add_questions',
-      headers: {
-        "X-CSRFToken": getCookie("csrftoken")
-      },
-      data: {
-        'questions[]': questions,
-        'test_id': test_id
-      },
-    });;
-    
-    clearForm();
-    window.location.replace("http://127.0.0.1:8000/multiple_choice/list");
-    // displayQuiz();
-    // renderQuiz();
-
-  } else {
-    // Error Handler
-    alert('Display error');
-  }
-})
+storeData("title", "a", "b", "c", "c");
+   // clearForm();
+    //window.location.replace("http://127.0.0.1:8000/multiple_choice/list");
+     displayQuiz();
+     renderQuiz();
 
 // Render quiz
 function renderQuiz() {

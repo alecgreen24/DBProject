@@ -190,6 +190,10 @@ def take_test(request):
         tests = TDAO.getAllTests()
         return render(request, "take_test.html", {"tests": tests})
 
+def test_page(request):
+        return render(request, "test_page.html")
+
+
 def logout(request):
     if request.session.get('id'):
         del request.session['id']
