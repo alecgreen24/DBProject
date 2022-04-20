@@ -84,11 +84,13 @@ def storeQuestions(questions, test_id):
     for question_id in questions_ids:
         tq = TestQuestion(test_id, question_id)
         TQDAO.createTestQuestion(tq)
+        return True
     
 
 def list(request):
     if isAuthenticated(request):
-        return render(request, "list.html")
+        tests = TDAO.getAllTests()
+        return render(request, "list.html", {"tests": tests})
 
 
 
@@ -102,11 +104,11 @@ def add_questions(request):
         if request.method == 'POST':
             questions = request.POST.getlist('questions[]')
             test_id = request.POST.get('test_id')
-            storeQuestions(questions, test_id)
-            return HttpResponseRedirect(reverse("list"))
+            if storeQuestions(questions, test_id):
+                return HttpResponseRedirect(reverse("list"))
         return render(request, "add_questions.html")
 
-
+ 
 def login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
@@ -167,7 +169,7 @@ def new_test(request):
         if request.method == "POST":
             title = request.POST.get("title")
             creator_id = request.session.get('id')
-            new_test = Test(creator_id, title)
+            new_test = Test(creator_id = creator_id, title = title)
             id = TDAO.createTest(new_test)
             new_test.id = id  
             if isinstance(id, int):
@@ -175,16 +177,28 @@ def new_test(request):
             return render(request, "new_test.html", {
                     "message": "There was an error creating the test."})
         return render(request, "new_test.html")
-        
+
+def possible_tests(request):
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "possible_tests.html", {"tests": tests})
+   
+def take_test(request, test_id):
+    if isAuthenticated(request):
+        return take_test("taking.html", {
+        'test_id': test_id,
+        'questions': questions,
+        'answers': answers})
+        # 'test_id': test_id,
+        # 'questions': questions,
+        # 'answers': answers})
+
 
 def edit(request):
     return render(request, "edit_test.html")
 
 def account(request):
     return render(request, "account_info.html")
-
-def take_test(request):
-    return render(request, "take_test.html")
 
 def logout(request):
     if request.session.get('id'):

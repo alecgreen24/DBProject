@@ -1,4 +1,6 @@
 from .connector import *
+import numpy as np
+from .test import Test
 
 class TestDAO():
     def __init__(self, host, database, user, password):
@@ -35,8 +37,38 @@ class TestDAO():
                 conn.close()
 
 
-    def getTestTitle(self, test):
-        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test.id}'"""
+    def getAllTests(self):
+        sql = f"""SELECT * FROM test WHERE active = 'true'"""
+        conn = None
+        try:
+            # Establishing the connection
+            conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+            # Create a cursor
+            cur = conn.cursor()
+            # Execute a statement.
+            cur.execute(sql)
+            # Fetch the id of the test created.
+            rows = np.array(cur.fetchall())
+            # Create the test objects in order to return the data in a more structured way
+            test_objs = []
+            for row in rows:
+                test = Test(id = row[0], creator_id = row[1], title = row[2], created_at = row[3])
+                test_objs.append(test)
+            # Close the communication with the PostgreSQL
+            cur.close()
+            # Returns the instances of Test.
+            return test_objs
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+            return error
+        finally:
+            if conn is not None:
+                conn.close()
+
+
+    def getTestTitle(self, test_id):
+        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
         conn = None
         try:
             # Establishing the connection
