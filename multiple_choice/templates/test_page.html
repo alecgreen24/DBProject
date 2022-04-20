@@ -22,6 +22,68 @@
   </nav>
   <!-- Main Content -->
   <div class="container" id="container">
+    <!-- Configue Quiz -->
+    <div class="row" id="quizConfig">
+      <form class="col s12">
+        <div class="row">
+        </div>
+      </form>
+<h5> Quiz Page </h5>
+
+      <!-- Create questions -->
+      <div class="col s6">
+        <a id="generateBtn" class="waves-effect waves-light btn-small">Start Quiz</a>
+      </div>
+    </div>
+
+    <!-- Quiz Form -->
+    <div id="formContainer" class="row hide">
+      <form id="quizForm" class="col s12">
+        <!-- Title -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="title" placeholder="Enter the question" type="text" class="validate">
+            <label for="question_title">Question Title</label>
+          </div>
+        </div>
+        <!-- User Input 1 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input1" placeholder="Enter answer" type="text" class="validate">
+            <label>Option A</label>
+          </div>
+        </div>
+        <!-- User Input 2 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input2" placeholder="Enter answer" type="text" class="validate">
+            <label>Option B</label>
+          </div>
+        </div>
+
+        <!--User Input 3 -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="input3" placeholder="Enter answer" type="text" class="validate">
+            <label>Option C</label>
+          </div>
+        </div>
+
+        <!--Correct Answer-->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="correctValue" placeholder="Enter the correct answer. A,B,C?" type="text" class="validate">
+            <label>Correct Answer</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div id="submitBtn" class="col s6">
+          <a id="submit" class="waves-effect waves-light btn-small">Add to bank</a>
+        </div>
+      </form>
+    </div>
+
     <!-- Quiz -->
     <form id="quiz" class="hide" action="#">
       <h5 id="qTitle"></h5>
@@ -54,4 +116,4 @@
   <script type='text/javascript' src="{% static 'multiple_choice/test.js' %}?{% now 'U' %}"></script>
 </body>
 
-</html>,
+</html>

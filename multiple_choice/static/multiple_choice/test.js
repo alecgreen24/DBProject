@@ -3,7 +3,7 @@
 const quiz = document.getElementById('quiz');
 const generateBtn = document.getElementById('generateBtn');
 const quizConfig = document.getElementById('quizConfig');
-const qTotal = document.getElementById('qTotal');
+const qTotal = 4;
 const total = qTotal.value;
 const form = document.getElementById('quizForm');
 const submit = document.getElementById('submit');
@@ -27,16 +27,27 @@ const questions = [];
 let correct = 0;
 let incorrect = 0;
 
+// Generate questions & options for quiz
+generateBtn.addEventListener('click', (e) => {
+  // Check input fields have value
+  storeData();
+  clearConfig();
+    clearForm();
+    displayQuiz();
+    renderQuiz();
+})
 
 function storeData() {
   // Get values
+  for(i = 0; i < qTotal; i++){
   const title = "Test Test";
-  const input1 = "Option A";
-  const input2 = "Option B";
-  const input3 = "Option C";
-  const value = "Option B";
+  const input1 = "Input 1";
+  const input2 = "Input 2";
+  const input3 = "Input 3";
+  const value = "A";
   // Append to array
   questions.push([title, input1, input2, input3, value]);
+  }
   // Increase position in form
   pos++;
   console.log(pos);
@@ -64,11 +75,15 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-storeData("title", "a", "b", "c", "c");
-   // clearForm();
-    //window.location.replace("http://127.0.0.1:8000/multiple_choice/list");
-     displayQuiz();
-     renderQuiz();
+
+// Start Quiz
+submit.addEventListener('click', (e) => {
+    storeData();
+    clearForm();
+    displayQuiz();
+    renderQuiz();
+
+})
 
 // Render quiz
 function renderQuiz() {
@@ -123,7 +138,7 @@ submitAnswer.addEventListener('click', (e) => {
 // Display results from quiz
 function displayResults() {
   quiz.innerHTML = '';
-  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5>';
+  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5> <button onclick="window.location.href = "http://127.0.0.1:8000/multiple_choice/list";" id="homeButton" class="waves-effect waves-light btn-small">Return To Home</button>';
 }
 
 // Event Listener - Add checked status
