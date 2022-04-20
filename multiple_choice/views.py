@@ -169,7 +169,7 @@ def new_test(request):
         if request.method == "POST":
             title = request.POST.get("title")
             creator_id = request.session.get('id')
-            new_test = Test(creator_id, title)
+            new_test = Test(creator_id = creator_id, title = title)
             id = TDAO.createTest(new_test)
             new_test.id = id  
             if isinstance(id, int):
@@ -177,18 +177,28 @@ def new_test(request):
             return render(request, "new_test.html", {
                     "message": "There was an error creating the test."})
         return render(request, "new_test.html")
-        
+
+def possible_tests(request):
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "possible_tests.html", {"tests": tests})
+   
+def take_test(request, test_id):
+    if isAuthenticated(request):
+        return take_test("taking.html", {
+        'test_id': test_id,
+        'questions': questions,
+        'answers': answers})
+        # 'test_id': test_id,
+        # 'questions': questions,
+        # 'answers': answers})
+
 
 def edit(request):
     return render(request, "edit_test.html")
 
 def account(request):
     return render(request, "account_info.html")
-
-def take_test(request):
-    if isAuthenticated(request):
-        tests = TDAO.getAllTests()
-        return render(request, "take_test.html", {"tests": tests})
 
 def logout(request):
     if request.session.get('id'):
