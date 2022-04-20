@@ -84,11 +84,13 @@ def storeQuestions(questions, test_id):
     for question_id in questions_ids:
         tq = TestQuestion(test_id, question_id)
         TQDAO.createTestQuestion(tq)
+        return True
     
 
 def list(request):
     if isAuthenticated(request):
-        return render(request, "list.html")
+        tests = TDAO.getAllTests()
+        return render(request, "list.html", {"tests": tests})
 
 
 
@@ -102,11 +104,11 @@ def add_questions(request):
         if request.method == 'POST':
             questions = request.POST.getlist('questions[]')
             test_id = request.POST.get('test_id')
-            storeQuestions(questions, test_id)
-            return HttpResponseRedirect(reverse("list"))
+            if storeQuestions(questions, test_id):
+                return HttpResponseRedirect(reverse("list"))
         return render(request, "add_questions.html")
 
-
+ 
 def login(request):
     if request.method == 'POST':
         username = request.POST.get("username")
@@ -184,7 +186,9 @@ def account(request):
     return render(request, "account_info.html")
 
 def take_test(request):
-    return render(request, "take_test.html")
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "take_test.html", {"tests": tests})
 
 def logout(request):
     if request.session.get('id'):

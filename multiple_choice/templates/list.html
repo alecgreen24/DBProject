@@ -24,26 +24,13 @@
       <div id="content">
         <h3>Existing Quizzes </h3>
         <table>
+          {% for test in tests %}
           <tr>
-            <th>Quiz</th>
-            <th>Creator</th>
-            <th>Date</th>
+            <th>{{test.title}}</th>
+            <th>{{test.creator}}</th>
+            <th>{{test.created_at}}</th>
           </tr>
-          <tr>
-            <td>Math Modeling Quiz 1</td>
-            <td>Mariano Jalif</td>
-            <td>4/10/2022</td>
-          </tr>
-          <tr>
-            <td>Database Programming Quiz 1</td>
-            <td>Alec Green</td>
-            <td>4/10/2022</td>
-          </tr>
-          <tr>
-            <td>Software Testing Quiz 77</td>
-            <td>Kyler England</td>
-            <td>4/10/2022</td>
-          </tr>
+          {% endfor %}
         </table>
       </div>
     </div>
