@@ -1,6 +1,8 @@
 from .connector import *
 import numpy as np
 from .test import Test
+from .question import Question
+from .answer import Answer
 
 class TestDAO():
     def __init__(self, host, database, user, password):
@@ -67,8 +69,8 @@ class TestDAO():
                 conn.close()
 
 
-    def getTestTitle(self, test_id):
-        sql = f"""SELECT test.title FROM test WHERE test.id  = '{test_id}'"""
+    def getOneTest(self, test_id):
+        sql = f"""SELECT * FROM test WHERE id = '{test_id}' AND active = 'true'"""
         conn = None
         try:
             # Establishing the connection
@@ -78,11 +80,13 @@ class TestDAO():
             # Execute a statement.
             cur.execute(sql)
             # Fetch the id of the test created.
-            test_id = cur.fetchone()
+            row = np.array(cur.fetchone())
+            # Create a test instance from the data. 
+            test = Test(id = row[0], creator_id = row[1], title = row[2], created_at = row[3])
             # Close the communication with the PostgreSQL
             cur.close()
-            # Returns the status of the commit if the change was successful.
-            return test_id[0]
+            # Returns the instances of Test.
+            return test
 
     
 
@@ -92,9 +96,22 @@ class TestDAO():
         finally:
             if conn is not None:
                 conn.close()
-    
-    def selectTests(self, test):
-        sql = f"""SELECT * FROM test;"""
+
+
+    def getQuestions(self, test):
+        sql = f"""SELECT 
+            q.id as question_id, 
+            q.content as question_content, 
+            qa.answer_id, 
+            answer.content as answer_content
+            FROM question q
+            JOIN question_answer qa
+            ON q.id = qa.question_id
+            JOIN answer
+            ON qa.answer_id =  answer.id
+            WHERE q.id IN (SELECT question_id
+            FROM test_question
+            WHERE test_id = '{test.id}')"""
         conn = None
         try:
             # Establishing the connection
@@ -104,17 +121,30 @@ class TestDAO():
             # Execute a statement.
             cur.execute(sql)
             # Fetch the id of the test created.
-            id = cur.fetchone()
-            # Commit the changes on the table.
-            conn.commit()
+            rows = np.array(cur.fetchall())
+            # Create a test instance from the data. 
+            questions = []
+
+            current_q = Question(content = rows[0][1])
+            current_q.id = rows[0][0]
+            for row in rows:
+                if current_q.id == row[0]:
+                    current_q.answers.append(Answer(row[3]))
+                else:
+                    questions.append(current_q)
+                    current_q = Question(content = row[1])
+                    current_q.id = row[0]
+            questions.append(current_q)
             # Close the communication with the PostgreSQL
             cur.close()
-            # Returns the status of the commit if the change was successful.
-            return id[0]
+            # Returns the instances of Test.
+            return questions
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
             return error
         finally:
             if conn is not None:
-                conn.close()  
+                conn.close()
+
+    
