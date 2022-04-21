@@ -186,7 +186,7 @@ def take_test(request, test_id):
     test = TDAO.getOneTest(test_id)
     questions = TDAO.getQuestions(test)
     # json_q = [(q.toJSON()) for q in questions]
-    return render(request, "test_page.html", {
+    return render(request, "test_page1.html", {
     'test': test,
     'questions': questions})
 
