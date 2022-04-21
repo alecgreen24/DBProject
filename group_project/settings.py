@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-from tkinter import TRUE
+from tkinter import TRUE, FALSE
 import json
 import os
 from django.core.exceptions import ImproperlyConfigured
