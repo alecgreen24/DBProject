@@ -1,5 +1,7 @@
 
-import numpy as np
+from asyncio import QueueEmpty
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 from group_project.settings import *
 from django.shortcuts import render
 from django.urls import reverse
@@ -53,7 +55,6 @@ def isAuthenticated(request):
 
 def storeQuestions(questions, test_id):
     questions = np.array(questions)
-    print(f"This is the Test ID: {test_id}")
     questions_ids = []
     for question_set in questions:
         question_set = [str(i) for i in question_set.split(',')]
@@ -74,8 +75,7 @@ def storeQuestions(questions, test_id):
             correct_answer_id = answers_ids[1]
         else:
             correct_answer_id = answers_ids[2]
-        print("Correct answer id: ", correct_answer_id)
-        question = Question(question_content, correct_answer_id)
+        question = Question(content = question_content, correct_answer_id = correct_answer_id)
         q_id = QDAO.createQuestion(question)
         for answer_id in answers_ids:
             qa = QuestionAnswer(q_id, answer_id)
@@ -84,7 +84,7 @@ def storeQuestions(questions, test_id):
     for question_id in questions_ids:
         tq = TestQuestion(test_id, question_id)
         TQDAO.createTestQuestion(tq)
-        return True
+    return True
     
 
 def list(request):
@@ -130,7 +130,6 @@ def login(request):
         return render(request, 'login.html', {
             "message": "Wrong username or/and passsword."})
     return render(request, 'login.html')
-
 
 
 def signup(request):
@@ -184,14 +183,12 @@ def possible_tests(request):
         return render(request, "possible_tests.html", {"tests": tests})
    
 def take_test(request, test_id):
-    if isAuthenticated(request):
-        return take_test("taking.html", {
-        'test_id': test_id,
-        'questions': questions,
-        'answers': answers})
-        # 'test_id': test_id,
-        # 'questions': questions,
-        # 'answers': answers})
+    test = TDAO.getOneTest(test_id)
+    questions = TDAO.getQuestions(test)
+    # json_q = [(q.toJSON()) for q in questions]
+    return render(request, "test_page.html", {
+    'test': test,
+    'questions': questions})
 
 
 def edit(request):
@@ -199,14 +196,6 @@ def edit(request):
 
 def account(request):
     return render(request, "account_info.html")
-
-def take_test(request):
-    if isAuthenticated(request):
-        tests = TDAO.getAllTests()
-        return render(request, "take_test.html", {"tests": tests})
-
-def test_page(request):
-        return render(request, "test_page.html")
 
 
 def logout(request):

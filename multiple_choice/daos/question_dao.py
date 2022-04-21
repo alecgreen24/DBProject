@@ -8,7 +8,7 @@ class QuestionDAO():
         self.password = password
 
     def createQuestion(self, question):
-        sql = f"""INSERT INTO question VALUES(DEFAULT,'{question.content}')  RETURNING id;"""
+        sql = f"""INSERT INTO question VALUES(DEFAULT,'{question.content}', '{question.correct_answer_id}') RETURNING id;"""
         conn = None
         try:
             # Establishing the connection
