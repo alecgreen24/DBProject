@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'multiple_choice/login.css' %}?{% now 'U' %}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open Sans" />
+    <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" action="{% url 'signup' %}">
+    <form name="quiz" method="post" onsubmit=getResults() action="{% url 'tests_taken' %}" method = "post">
         {% csrf_token %}
     <p>
+
+
         {% for question in questions %} 
-        <p>
+        <p id = "question">
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name="{{question.id}}" method= "post" />
-                    <span id="{{answer.id}}">{{ answer.content }}</span>
+                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}"/>
+                    <span id="{{ answer.id }}">{{ answer.content }}</span>
                     
                 </p>
                 {% endfor %}
@@ -27,8 +32,20 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
-    {% update_variable current as flag %}
-
+    <script type="text/javascript">
+    function getResults(){
+    
+    var myVar;
+    var questions = document.getElementsByTagName("question"),
+    questions = 0;
+    for (var i=0, n=question.length; i<n; ++i) {
+            ++questions;
+            var myVar = document.getElementById("myVar").value;
+            console.log(myVar);
+        }
+   console.log("You got 0/" + questions + " questions correct.");
+    }
+    </script>
 </form>
 </body>
 </html>
