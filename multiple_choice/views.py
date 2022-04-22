@@ -185,28 +185,17 @@ def possible_tests(request):
 def take_test(request, test_id):
     test = TDAO.getOneTest(test_id)
     questions = TDAO.getQuestions(test)
-<<<<<<< HEAD
-    correct_answers = TDAO.getQuestionsAndCorrectAnswer(test)
-    return render(request, "test_page1.html", {
-    'test': test,
-    'questions': questions,
-    'correct_answers': correct_answers,
-    })
-
-def chosen_test(request,test_id):
-
-=======
     return render(request, "test_page1.html", {
     'test': test,
     'questions': questions,
     })
->>>>>>> fad8378ef8fd7d67fdc3e3c3d1be91fc56cc2261
-
 
 def test_taken(request, test_id):
     if request.method == "POST":
         test = TDAO.getOneTest(test_id)
-        questions = TDAO.getQuestionsAndAnswer(test)
+        questions = TDAO.getQuestionsAndCorrectAnswer(test)
+        
+
 
 def edit(request):
     if isAuthenticated(request):
