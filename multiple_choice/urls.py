@@ -16,5 +16,5 @@ urlpatterns = [
     path('add_questions', views.add_questions, name= "add_questions"),
     path('possible_tests', views.possible_tests, name="possible_tests"),
     path('take_test/<int:test_id>', views.take_test, name="take_test"),
-    path('tests_taken', views.tests_taken, name="tests_taken"),
+    path('test_taken/<int:test_id>', views.test_taken, name="tests_taken"),
 ]
