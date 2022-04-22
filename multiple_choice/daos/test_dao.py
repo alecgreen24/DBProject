@@ -95,7 +95,6 @@ class TestDAO():
             if conn is not None:
                 conn.close()
 
-
     def getQuestions(self, test):
         sql = f"""SELECT 
             q.id as question_id, 
@@ -127,14 +126,57 @@ class TestDAO():
             current_q.id = rows[0][0]
             for row in rows:
                 if current_q.id == row[0]:
-                    answer = Answer(row[3])
+                    answer = Answer(content = row[3])
                     answer.id = row[2]
                     current_q.answers.append(answer)
                 else:
                     questions.append(current_q)
                     current_q = Question(content = row[1])
+                    answer = Answer(content = row[3])
+                    answer.id = row[2]
+                    current_q.answers.append(answer)
                     current_q.id = row[0]
             questions.append(current_q)
+            # Close the communication with the PostgreSQL
+            cur.close()
+            # Returns the instances of Test.
+            return questions
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+            return error
+        finally:
+            if conn is not None:
+                conn.close()
+
+
+    def getQuestionsAndCorrectAnswer(self, test):
+        sql = f"""SELECT question.id, question.content, answer.id, answer.content as correct_answer
+FROM answer JOIN question
+ON answer.id = question.correct_answer_id
+JOIN test_question 
+ON test_question.question_id = question.id
+WHERE test_question.test_id = {test.id}"""
+        conn = None
+        try:
+            # Establishing the connection
+            conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+            # Create a cursor
+            cur = conn.cursor()
+            # Execute a statement.
+            cur.execute(sql)
+            # Fetch the id of the test created.
+            rows = np.array(cur.fetchall())
+            # Create a test instance from the data. 
+            questions = []
+
+            for row in rows:
+                answer = Answer(content = row[3])
+                answer.id = row[2]
+                question = Question(content = row[1], correct_answer = answer)
+                question.id = row[0]
+                questions.append(question)
+
             # Close the communication with the PostgreSQL
             cur.close()
             # Returns the instances of Test.

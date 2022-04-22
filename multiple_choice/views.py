@@ -185,14 +185,28 @@ def possible_tests(request):
 def take_test(request, test_id):
     test = TDAO.getOneTest(test_id)
     questions = TDAO.getQuestions(test)
-    # json_q = [(q.toJSON()) for q in questions]
+    correct_answers = TDAO.getQuestionsAndCorrectAnswer(test)
     return render(request, "test_page1.html", {
     'test': test,
-    'questions': questions})
+    'questions': questions,
+    'correct_answers': correct_answers,
+    })
+
+def chosen_test(request,test_id):
+
 
 
 def edit(request):
-    return render(request, "edit_test.html")
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "edit_test.html", {"tests": tests})
+
+def editor(request, test_id):
+    test = TDAO.getOneTest(test_id)
+    questions = TDAO.getQuestions(test)
+    return render(request, 'editor.html',
+    { 'test': test, 
+    'questions': questions})
 
 def account(request):
     return render(request, "account_info.html")
