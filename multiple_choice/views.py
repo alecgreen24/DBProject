@@ -192,7 +192,6 @@ def take_test(request, test_id):
     'correct_answers': correct_answers,
     })
 
-def chosen_test(request,test_id):
 
 
 

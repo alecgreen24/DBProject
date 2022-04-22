@@ -12,8 +12,8 @@
     <form name="quiz" method="post" onsubmit=getResults() action="#">
         {% csrf_token %}
     <p>
-        {% for question in questions %}
-        <p id = "question">
+    
+        
 
         {% for question in correct_answers %} 
             <span>{{ question.content }}</span> 
@@ -23,9 +23,8 @@
        
 
 
-
         {% for question in questions %} 
-        <p>
+        <p id = "question">
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
@@ -43,13 +42,21 @@
     <input type="submit" value="Submit">
     <script>
     function getResults(){
+    numCorrect = 0;
+    
     var questions = document.getElementsByTagName("question"),
     questions = 0;
     for (var i=0, n=question.length; i<n; ++i) {
             ++questions;
         }
     alert("You got 0/" + questions + " questions correct.");
+    if(document.getElementsByTagName("{{ question.id }}") == "{{ question.correct_answer.id }}"){
+        numCorrect++
     }
+    console.log(numCorrect);
+
+    }
+
     </script>
 </form>
 </body>
