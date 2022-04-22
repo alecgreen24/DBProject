@@ -22,74 +22,28 @@
           <div class="row">
           </div>
         </form>
-  <h5> Quiz Page </h5>
-  
-        <!-- Create questions -->
-        <div class="col s6">
-          <a id="generateBtn" class="waves-effect waves-light btn-small">Start Quiz</a>
-        </div>
-      </div>
+  <h5> Edit Test </h5>
   
 
   
       <!-- Quiz Form -->
       <div id="formContainer" class="row hide">
         <form id="quizForm" class="col s12">
-          <!-- Title -->
-          <div class="row">
-            <div class="input-field col s12 m6">
-            {% for question in questions %} 
-              <input id="title" value="{{ question.content }}" type="text" class="validate">
-              <label for="question_title">Question Title</label>
-              {% endfor %}
-            </div>
-          </div>
 
           <!-- User Input 1 -->
           <div class="row">
             <div class="input-field col s12 m6">
                 {% for question in questions %}
-                {% for answer in question.answers %}
-                <!-- {% with current=1 %}
-                {% if forloop.counter == current %}  -->
-              <input id="input1" value="{{ answer.content }}" type="text" class="validate">
-              <label>Option A</label>
-              <!-- {% endif %}
-              {% endwith %} -->
-              {% endfor %}
-              {% endfor %}
-            </div>
-          </div>
 
-          <!-- User Input 2 -->
-          <div class="row">
-            <div class="input-field col s12 m6">
-              {% for question in questions %}
-              {% for answer in question.answers %}
-              {% with current=2 %}
-              {% if forloop.counter == current %} 
-            <input id="input1" value="{{ answer.content }}" type="text" class="validate">
-            <label>Option B</label>
-            {% endif %}
-            {% endwith %}
-            {% endfor %}
-            {% endfor %}
-            </div>
-          </div>
-  
-          <!--User Input 3 -->
-          <div class="row">
-            <div class="input-field col s12 m6">
-              {% for question in questions %}
-              {% for answer in question.answers %}
-              {% with current=3 %}
-              {% if forloop.counter == current %} 
-            <input id="input1" value="{{ answer.content }}" type="text" class="validate">
-            <label>Option B</label>
-            {% endif %}
-            {% endwith %}
-            {% endfor %}
-            {% endfor %}
+                  <label for="{{question.id}}"></label>
+                  <input name="{{question.id}}" id="{{question.id}}" value="{{question.content}}" type="text" class="validate">
+
+                  {% for answer in question.answers %}
+                    <input id="{{answer.id}}" value="{{ answer.content }}" type="text" class="validate">
+                    <label>Option</label>
+                  {% endfor %}
+                
+                  {% endfor %}
             </div>
           </div>
 
