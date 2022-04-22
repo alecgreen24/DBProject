@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    {% load mathfilters %}
+    {% load custom_filter %}
+
+    
 
 </head>
 <body>
@@ -13,7 +15,7 @@
     
     <p>
         {% for question in questions %}
-        {% with current=1 %}
+        {% with current=1|add:1 %}
         {% if forloop.counter == current %}  
         <p>
             {{ question.content }}
@@ -35,6 +37,7 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
+    {% update_variable current as flag %}
 
 </form>
 
@@ -48,8 +51,6 @@
     counter++;
     console.log(counter);
     counter++;
-    "{{ current }}" = counter;
-    console.log("{{ current }}");
 
 
   </script>
