@@ -10,13 +10,89 @@
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <title>Edit Test</title>
 
-  <li>
-{% for question in questions %}
-{{ question.content }}
-{% endfor %}
-  </li>
+  <h2 class="sign" align="center">Select Question to Edit</h2>
 </head>
 
-<h2 class="sign" align="center">Select Question to Edit</h2>
+<body>
+    <!-- Main Content -->
+    <div class="container" id="container">
+      <!-- Configue Quiz -->
+      <div class="row" id="quizConfig">
+        <form class="col s12">
+          <div class="row">
+          </div>
+        </form>
+  <h5> Quiz Page </h5>
+  
+        <!-- Create questions -->
+        <div class="col s6">
+          <a id="generateBtn" class="waves-effect waves-light btn-small">Start Quiz</a>
+        </div>
+      </div>
+  
+
+  
+      <!-- Quiz Form -->
+      <div id="formContainer" class="row hide">
+        <form id="quizForm" class="col s12">
+          <!-- Title -->
+          <div class="row">
+            <div class="input-field col s12 m6">
+            {% for question in questions %} 
+              <input id="title" value="{{ question.content }}" type="text" class="validate">
+              <label for="question_title">Question Title</label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- User Input 1 -->
+          <div class="row">
+            <div class="input-field col s12 m6">
+                {% for question in questions %}
+                {% for answer in question.answers %}
+              <input id="input1" value="{{ answer.content }}" type="text" class="validate">
+              <label>Option A</label>
+              {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- User Input 2 -->
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input id="input2" value="{{ answer.content }}" type="text" class="validate">
+              <label>Option B</label>
+            </div>
+          </div>
+  
+          <!--User Input 3 -->
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input id="input3" value="{{ answer.content }}" type="text" class="validate">
+              <label>Option C</label>
+            </div>
+          </div>
+
+          <!--Correct Answer-->
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input id="correctValue" placeholder="Enter the correct answer. A,B,C?" type="text" class="validate">
+              <label>Correct Answer</label>
+            </div>
+          </div>
+  
+          <!-- Submit Button -->
+          <div id="submitBtn" class="col s6">
+            <a id="submit" class="waves-effect waves-light btn-small">Add to bank</a>
+          </div>
+        </form>
+      </div>
+  
+
+  
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script type='text/javascript' src="{% static 'multiple_choice/test.js' %}?{% now 'U' %}"></script>
+  </body>
 
 {% endblock %}

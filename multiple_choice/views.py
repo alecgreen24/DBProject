@@ -197,7 +197,11 @@ def edit(request):
         return render(request, "edit_test.html", {"tests": tests})
 
 def editor(request, test_id):
-    return render(request, 'editor.html')
+    test = TDAO.getOneTest(test_id)
+    questions = TDAO.getQuestions(test)
+    return render(request, 'editor.html',
+    { 'test': test, 
+    'questions': questions})
 
 def account(request):
     return render(request, "account_info.html")
