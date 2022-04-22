@@ -211,3 +211,8 @@ def logout(request):
     if request.session.get('id'):
         del request.session['id']
     return HttpResponseRedirect(reverse("login"))
+
+def tests_taken(request):
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "tests_taken.html", {"tests": tests})

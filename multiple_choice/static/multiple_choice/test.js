@@ -138,7 +138,8 @@ submitAnswer.addEventListener('click', (e) => {
 // Display results from quiz
 function displayResults() {
   quiz.innerHTML = '';
-  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5> <button onclick="window.location.href = "http://127.0.0.1:8000/multiple_choice/list";" id="homeButton" class="waves-effect waves-light btn-small">Return To Home</button>';
+  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5><a href="http://127.0.0.1:8000/multiple_choice/list"><input type="button" class="waves-effect waves-light btn-small" value="Return to Home" /></a>';
+
 }
 
 // Event Listener - Add checked status
