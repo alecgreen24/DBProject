@@ -5,54 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    {% load custom_filter %}
-
-    
-
 </head>
 <body>
-    <form name="quiz" method="post" onsubmit="return greeting()">
-    
+    <form name="quiz" method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
     <p>
-        {% for question in questions %}
-        {% with current=1|add:1 %}
-        {% if forloop.counter == current %}  
+        {% for question in questions %} 
         <p>
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name='choices' method= "post" />
-                    <span id="option1">{{ answer.content }}</span>
+                    <input id="selection" class="with-gap" type="radio" name="{{question.id}}" method= "post" />
+                    <span id="{{answer.id}}">{{ answer.content }}</span>
                     
                 </p>
                 {% endfor %}
-                
-                
             </span>
         </p>
-        {% endif %}
-        {% endwith %}
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
     {% update_variable current as flag %}
 
 </form>
-
-<script>
-    console.log("hi");
-
-    var counter = 0;
-    console.log(counter);
-    counter++;
-    console.log(counter);
-    counter++;
-    console.log(counter);
-    counter++;
-
-
-  </script>
 </body>
 </html>
