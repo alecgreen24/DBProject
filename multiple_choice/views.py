@@ -202,6 +202,7 @@ def editor(request, test_id):
     if request.method == "POST":
         for question in questions:
             question_content = request.POST.get(f"{question.id}")
+        id = TQDAO.updateTestQuestion(question)
     return render(request, 'editor.html', {"test_id":test_id, "questions": questions})
 
 def account(request):
