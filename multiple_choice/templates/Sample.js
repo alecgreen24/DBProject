@@ -3,7 +3,7 @@
 const quiz = document.getElementById('quiz');
 const generateBtn = document.getElementById('generateBtn');
 const quizConfig = document.getElementById('quizConfig');
-const qTotal = 4;
+const qTotal = document.getElementById('qTotal');
 const total = qTotal.value;
 const form = document.getElementById('quizForm');
 const submit = document.getElementById('submit');
@@ -30,24 +30,23 @@ let incorrect = 0;
 // Generate questions & options for quiz
 generateBtn.addEventListener('click', (e) => {
   // Check input fields have value
-  storeData();
-  clearConfig();
-    clearForm();
-    displayQuiz();
-    renderQuiz();
+  if (qTotal && qTotal.value) {
+    clearConfig();
+    renderForm();
+  } else {
+    alert('Input fields empty');
+  }
 })
 
 function storeData() {
   // Get values
-  for(i = 0; i < qTotal; i++){
-  const title = "Test Test";
-  const input1 = "Input 1";
-  const input2 = "Input 2";
-  const input3 = "Input 3";
-  const value = "A";
+  const title = document.getElementById('title').value;
+  const input1 = document.getElementById('input1').value;
+  const input2 = document.getElementById('input2').value;
+  const input3 = document.getElementById('input3').value;
+  const value = document.getElementById('correctValue').value;
   // Append to array
   questions.push([title, input1, input2, input3, value]);
-  }
   // Increase position in form
   pos++;
   console.log(pos);
@@ -76,13 +75,41 @@ function getCookie(name) {
   return cookieValue;
 }
 
-// Start Quiz
+// Submit quiz data to arrays
 submit.addEventListener('click', (e) => {
+  if (pos < qTotal.value) {
     storeData();
-    clearForm();
-    displayQuiz();
-    renderQuiz();
 
+  } else if (pos == qTotal.value) {
+    // Start quiz
+    storeData();
+
+    alert('Questions Stored!');
+    const test_id = document.getElementById('test_id').innerHTML;;
+    console.log("test_id:" + test_id)
+
+
+    $.ajax({
+      type: 'POST',
+      url: 'add_questions',
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+      },
+      data: {
+        'questions[]': questions,
+        'test_id': test_id
+      },
+    });;
+    
+    clearForm();
+    window.location.replace("http://127.0.0.1:8000/multiple_choice/list");
+    // displayQuiz();
+    // renderQuiz();
+
+  } else {
+    // Error Handler
+    alert('Display error');
+  }
 })
 
 // Render quiz
@@ -138,8 +165,7 @@ submitAnswer.addEventListener('click', (e) => {
 // Display results from quiz
 function displayResults() {
   quiz.innerHTML = '';
-  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5><a href="http://127.0.0.1:8000/multiple_choice/list"><input type="button" class="waves-effect waves-light btn-small" value="Return to Home" /></a>';
-
+  container.innerHTML = '<h5 id="result" class="center">Results ' + correct + '/ ' + questions.length + '</h5>';
 }
 
 // Event Listener - Add checked status
