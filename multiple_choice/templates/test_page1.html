@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" onsubmit="#">
-    
+    <form name="quiz" method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
     <p>
         {% for question in questions %} 
         <p>
@@ -27,6 +27,7 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
+    {% update_variable current as flag %}
 
 </form>
 </body>
