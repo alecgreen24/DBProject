@@ -14,6 +14,8 @@
 </head>
 
 <body>
+  <form name = "quiz" method = "post" action = "{% url 'editor' test_id %}">
+    {% csrf_token %}
     <!-- Main Content -->
     <div class="container" id="container">
       <!-- Configue Quiz -->
@@ -22,7 +24,7 @@
           <div class="row">
           </div>
         </form>
-  <h5> Edit Test </h5>
+    <h5> Edit Test </h5>
   
 
   
@@ -61,12 +63,9 @@
           </div>
         </form>
       </div>
-  
-
-  
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-    <script type='text/javascript' src="{% static 'multiple_choice/test.js' %}?{% now 'U' %}"></script>
+    <input type="submit" value="Submit">
+  </form>   
   </body>
 
 {% endblock %}

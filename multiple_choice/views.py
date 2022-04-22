@@ -199,9 +199,10 @@ def edit(request):
 def editor(request, test_id):
     test = TDAO.getOneTest(test_id)
     questions = TDAO.getQuestions(test)
-    return render(request, 'editor.html',
-    { 'test': test, 
-    'questions': questions})
+    if request.method == "POST":
+        for question in questions:
+            question_content = request.POST.get(f"{question.id}")
+    return render(request, 'editor.html', {"test_id":test_id, "questions": questions})
 
 def account(request):
     return render(request, "account_info.html")
