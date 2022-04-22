@@ -50,8 +50,12 @@
             <div class="input-field col s12 m6">
                 {% for question in questions %}
                 {% for answer in question.answers %}
+                {% with current=1 %}
+                {% if forloop.counter == current %} 
               <input id="input1" value="{{ answer.content }}" type="text" class="validate">
               <label>Option A</label>
+              {% endif %}
+              {% endwith %}
               {% endfor %}
               {% endfor %}
             </div>
@@ -60,16 +64,32 @@
           <!-- User Input 2 -->
           <div class="row">
             <div class="input-field col s12 m6">
-              <input id="input2" value="{{ answer.content }}" type="text" class="validate">
-              <label>Option B</label>
+              {% for question in questions %}
+              {% for answer in question.answers %}
+              {% with current=2 %}
+              {% if forloop.counter == current %} 
+            <input id="input1" value="{{ answer.content }}" type="text" class="validate">
+            <label>Option B</label>
+            {% endif %}
+            {% endwith %}
+            {% endfor %}
+            {% endfor %}
             </div>
           </div>
   
           <!--User Input 3 -->
           <div class="row">
             <div class="input-field col s12 m6">
-              <input id="input3" value="{{ answer.content }}" type="text" class="validate">
-              <label>Option C</label>
+              {% for question in questions %}
+              {% for answer in question.answers %}
+              {% with current=3 %}
+              {% if forloop.counter == current %} 
+            <input id="input1" value="{{ answer.content }}" type="text" class="validate">
+            <label>Option B</label>
+            {% endif %}
+            {% endwith %}
+            {% endfor %}
+            {% endfor %}
             </div>
           </div>
 
