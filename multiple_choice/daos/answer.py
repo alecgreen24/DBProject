@@ -2,7 +2,7 @@
 import json
 
 class Answer():
-    def __init__(self, content):
+    def __init__(self, content, id = None):
         self.id = None
         self.content = content
 

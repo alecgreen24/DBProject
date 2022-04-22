@@ -1,9 +1,10 @@
 import json
 class Question():
-    def __init__(self, content, correct_answer_id = None):
-        self.id = None
+    def __init__(self, content, id = None, correct_answer_id = None, correct_answer = None):
+        self.id = id
         self.content = content
         self.correct_answer_id = correct_answer_id
+        self.correct_answer = correct_answer
         self.answers = []
 
     def toJSON(self):

@@ -192,7 +192,16 @@ def take_test(request, test_id):
 
 
 def edit(request):
-    return render(request, "edit_test.html")
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "edit_test.html", {"tests": tests})
+
+def editor(request, test_id):
+    test = TDAO.getOneTest(test_id)
+    questions = TDAO.getQuestions(test)
+    return render(request, 'editor.html',
+    { 'test': test, 
+    'questions': questions})
 
 def account(request):
     return render(request, "account_info.html")
@@ -202,3 +211,8 @@ def logout(request):
     if request.session.get('id'):
         del request.session['id']
     return HttpResponseRedirect(reverse("login"))
+
+def tests_taken(request):
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "tests_taken.html", {"tests": tests})
