@@ -10,6 +10,7 @@ urlpatterns = [
     path('take_test', views.take_test, name="take_test"),
     path('logout', views.logout, name="logout"),
     path('new_test', views.new_test, name="new_test"),
+    path('editor/<int:test_id>', views.editor, name = "editor"),
     path('edit_test', views.edit, name="edit_test"),
     path('list', views.list, name="list"),
     path('account_info', views.account, name="account_info"),

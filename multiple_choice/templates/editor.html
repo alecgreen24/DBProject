@@ -9,14 +9,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   <title>Edit Test</title>
+
+  <li>
+{% for question in questions %}
+{{ question.content }}
+{% endfor %}
+  </li>
 </head>
 
-<h2 class="sign" align="center">Select Test to Edit</h2>
+<h2 class="sign" align="center">Select Question to Edit</h2>
 
-<body>
-  {% for test in tests %}
-  <a href="{% url 'editor' test.id %}">{{test.title}} -- {{test.created_at}}</a>
-  <br>
-  {% endfor %}
-</body>
 {% endblock %}

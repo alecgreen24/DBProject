@@ -192,7 +192,12 @@ def take_test(request, test_id):
 
 
 def edit(request):
-    return render(request, "edit_test.html")
+    if isAuthenticated(request):
+        tests = TDAO.getAllTests()
+        return render(request, "edit_test.html", {"tests": tests})
+
+def editor(request, test_id):
+    return render(request, 'editor.html')
 
 def account(request):
     return render(request, "account_info.html")
