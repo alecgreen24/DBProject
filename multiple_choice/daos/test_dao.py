@@ -129,7 +129,9 @@ class TestDAO():
             current_q.id = rows[0][0]
             for row in rows:
                 if current_q.id == row[0]:
-                    current_q.answers.append(Answer(row[3]))
+                    answer = Answer(row[3])
+                    answer.id = row[2]
+                    current_q.answers.append(answer)
                 else:
                     questions.append(current_q)
                     current_q = Question(content = row[1])
