@@ -126,12 +126,15 @@ class TestDAO():
             current_q.id = rows[0][0]
             for row in rows:
                 if current_q.id == row[0]:
-                    answer = Answer(row[3])
+                    answer = Answer(content = row[3])
                     answer.id = row[2]
                     current_q.answers.append(answer)
                 else:
                     questions.append(current_q)
                     current_q = Question(content = row[1])
+                    answer = Answer(content = row[3])
+                    answer.id = row[2]
+                    current_q.answers.append(answer)
                     current_q.id = row[0]
             questions.append(current_q)
             # Close the communication with the PostgreSQL
@@ -148,19 +151,12 @@ class TestDAO():
 
 
     def getQuestionsAndCorrectAnswer(self, test):
-        sql = f"""SELECT 
-            q.id as question_id, 
-            q.content as question_content, 
-            qa.answer_id, 
-            answer.content as answer_content
-            FROM question q
-            JOIN question_answer qa
-            ON q.id = qa.question_id
-            JOIN answer
-            ON qa.answer_id =  answer.id
-            WHERE q.id IN (SELECT question_id
-            FROM test_question
-            WHERE test_id = '{test.id}')"""
+        sql = f"""SELECT question.id, question.content, answer.id, answer.content as correct_answer
+FROM answer JOIN question
+ON answer.id = question.correct_answer_id
+JOIN test_question 
+ON test_question.question_id = question.id
+WHERE test_question.test_id = {test.id}"""
         conn = None
         try:
             # Establishing the connection
@@ -175,8 +171,10 @@ class TestDAO():
             questions = []
 
             for row in rows:
-                answer = Answer(content = row[3], id = row[2])
-                question = Question(content = row[1], id= row[0], correct_answer = answer)
+                answer = Answer(content = row[3])
+                answer.id = row[2]
+                question = Question(content = row[1], correct_answer = answer)
+                question.id = row[0]
                 questions.append(question)
 
             # Close the communication with the PostgreSQL
