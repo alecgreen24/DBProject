@@ -50,12 +50,12 @@
             <div class="input-field col s12 m6">
                 {% for question in questions %}
                 {% for answer in question.answers %}
-                {% with current=1 %}
-                {% if forloop.counter == current %} 
+                <!-- {% with current=1 %}
+                {% if forloop.counter == current %}  -->
               <input id="input1" value="{{ answer.content }}" type="text" class="validate">
               <label>Option A</label>
-              {% endif %}
-              {% endwith %}
+              <!-- {% endif %}
+              {% endwith %} -->
               {% endfor %}
               {% endfor %}
             </div>
