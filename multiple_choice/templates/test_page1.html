@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="stylesheet" href="style.css">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,18 +9,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" action="{% url 'signup' %}">
+    <form name="quiz" method="post" onsubmit=getResults() action="#">
         {% csrf_token %}
     <p>
-        {% for question in questions %} 
-        <p>
+        {% for question in questions %}
+        <p id = "question">
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name="{{question.id}}" method= "post" />
-                    <span id="{{answer.id}}">{{ answer.content }}</span>
+                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}" method= "post" />
+                    <span id="{{ answer.id }}">{{ answer.content }}</span>
                     
                 </p>
                 {% endfor %}
@@ -27,8 +29,16 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
-    {% update_variable current as flag %}
-
+    <script>
+    function getResults(){
+    var questions = document.getElementsByTagName("question"),
+    questions = 0;
+    for (var i=0, n=question.length; i<n; ++i) {
+            ++questions;
+        }
+    alert("You got 0/" + questions + " questions correct.");
+    }
+    </script>
 </form>
 </body>
 </html>
