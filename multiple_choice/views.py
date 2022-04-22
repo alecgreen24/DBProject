@@ -200,7 +200,6 @@ def test_taken(request, test_id):
             choice = request.POST.get(question.id)
             if choice == question.correct_answer.id:
                 correct_count += 1
-            print(choice)
         decimal = (correct_count / len(questions))
         score = "{:.0%}". format(decimal)
         return render(request, "list.html", {"score": score})
