@@ -194,7 +194,6 @@ def take_test(request, test_id):
 
 
 
-
 def edit(request):
     if isAuthenticated(request):
         tests = TDAO.getAllTests()

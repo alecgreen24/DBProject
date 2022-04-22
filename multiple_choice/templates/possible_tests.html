@@ -15,9 +15,9 @@
 
 <body>
   {% for test in tests %}
-  <p align="center">
+  <ul align="center">
   <a href="{% url 'take_test' test.id %}">{{test.title}} -- {{test.created_at}}</a>
-  </p>
+  </ul>
   <br>
   {% endfor %}
 </body>

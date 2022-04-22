@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="style.css">
     {% load static %}
-<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'multiple_choice/login.css' %}?{% now 'U' %}">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open Sans" />
+    <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" onsubmit=getResults() action="#">
+    <form name="quiz" method="post" onsubmit=getResults() action="{% url 'tests_taken' %}" method = "post">
         {% csrf_token %}
     <p>
-    
-        
-
-        {% for question in correct_answers %} 
-            <span>{{ question.content }}</span> 
-            <span>{{ question.correct_answer.id }}</span> 
-            <span>{{ question.correct_answer.content }}</span> <br>
-        {% endfor %}
-       
 
 
         {% for question in questions %} 
@@ -30,7 +22,7 @@
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}" method= "post" />
+                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}"/>
                     <span id="{{ answer.id }}">{{ answer.content }}</span>
                     
                 </p>
@@ -40,23 +32,19 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
-    <script>
+    <script type="text/javascript">
     function getResults(){
-    numCorrect = 0;
     
+    var myVar;
     var questions = document.getElementsByTagName("question"),
     questions = 0;
     for (var i=0, n=question.length; i<n; ++i) {
             ++questions;
+            var myVar = document.getElementById("myVar").value;
+            console.log(myVar);
         }
-    alert("You got 0/" + questions + " questions correct.");
-    if(document.getElementsByTagName("{{ question.id }}") == "{{ question.correct_answer.id }}"){
-        numCorrect++
+   console.log("You got 0/" + questions + " questions correct.");
     }
-    console.log(numCorrect);
-
-    }
-
     </script>
 </form>
 </body>
