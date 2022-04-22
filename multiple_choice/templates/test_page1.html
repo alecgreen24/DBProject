@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="stylesheet" href="style.css">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +9,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" action="{% url 'signup' %}">
+    <form name="quiz" method="post" action="{% url 'post_test' %}">
         {% csrf_token %}
     <p>
-
-        {% for question in correct_answers %} 
-            <span>{{ question.content }}</span> 
-            <span>{{ question.correct_answer.id }}</span> 
-            <span>{{ question.correct_answer.content }}</span> <br>
-        {% endfor %}
-       
-
-
-
-        {% for question in questions %} 
-        <p>
+        {% for question in questions %}
+        <p id = "question">
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name="{{question.id}}" method= "post" />
-                    <span id="{{answer.id}}">{{ answer.content }}</span>
+                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}" method= "post" />
+                    <span id="{{ answer.id }}">{{ answer.content }}</span>
                     
                 </p>
                 {% endfor %}
@@ -37,7 +29,6 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
-
-</form>
+    </form>
 </body>
 </html>
