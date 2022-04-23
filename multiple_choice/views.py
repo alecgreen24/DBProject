@@ -1,6 +1,7 @@
 
 from asyncio import QueueEmpty
 import json
+from tkinter import N
 from django.core.serializers.json import DjangoJSONEncoder
 from group_project.settings import *
 from django.shortcuts import render
@@ -190,11 +191,19 @@ def take_test(request, test_id):
     'questions': questions,
     })
 
-
 def test_taken(request, test_id):
     if request.method == "POST":
         test = TDAO.getOneTest(test_id)
-        questions = TDAO.getQuestionsAndAnswer(test)
+        questions = TDAO.getQuestionsAndCorrectAnswer(test)
+        correct_count = 0
+        for question in questions:
+            choice = request.POST.get(question.id)
+            if choice == question.correct_answer.id:
+                correct_count += 1
+        decimal = (correct_count / len(questions))
+        score = "{:.0%}". format(decimal)
+        return render(request, "list.html", {"score": score})
+
 
 def edit(request):
     if isAuthenticated(request):
