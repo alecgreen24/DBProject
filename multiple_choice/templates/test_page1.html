@@ -10,9 +10,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form name="quiz" method="post" onsubmit=getResults() action="{% url 'tests_taken' %}" method = "post">
+    <form name="quiz" method="post" action="{% url 'test_taken' test.id %}">
         {% csrf_token %}
     <p>
+        <p>
 
 
         {% for question in questions %} 
@@ -22,7 +23,7 @@
                 {% for answer in question.answers %}
                 
                 <p>
-                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}"/>
+                    <input id="selection" class="with-gap" type="radio" name="{{ question.id }}" value="{{ answer.id }}"/>
                     <span id="{{ answer.id }}">{{ answer.content }}</span>
                     
                 </p>
@@ -32,6 +33,7 @@
         {% endfor %}
     </p>
     <input type="submit" value="Submit">
-</form>
+    </form>
 </body>
+
 </html>
