@@ -57,6 +57,31 @@ class QuestionDAO():
             if conn is not None:
                 conn.close()
 
+
+    def deleteQuestionFromID(self, id):
+            sql = f"""DELETE FROM question WHERE id = '{id}'"""
+            conn = None
+            try:
+                # Establishing the connection
+                conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+                # Create a cursor
+                cur = conn.cursor()
+                # Execute a statement.
+                cur.execute(sql)
+                # Commit the changes on the table.
+                conn.commit()
+                # Close the communication with the PostgreSQL
+                cur.close()
+                # Returns the status of the commit if the change was successful.
+                return "success"
+
+            except (Exception, psycopg2.DatabaseError) as error:
+                print(error)
+                return error
+            finally:
+                if conn is not None:
+                    conn.close()
+
     # def updateQuestion(self, question):
     
     #     sql = f"""UPDATE question SET content = '{question.content}, correct_answer_id = '{question.id}"""

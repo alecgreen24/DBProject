@@ -207,8 +207,8 @@ def editor(request, test_id):
     if request.method == "POST":
         for question in questions:
             question_id = request.POST.get(f"{question.id}")
-            id = QDAO.deleteQuestion(question)
-            id = QDAO.createQuestion(question)
+            QDAO.deleteQuestionFromID(question_id)
+            QDAO.createQuestion(question)
     return render(request, 'editor.html', {"test_id":test_id, "questions": questions})
 
 def account(request):
