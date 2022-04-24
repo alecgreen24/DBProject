@@ -34,7 +34,7 @@ class QuestionDAO():
                 conn.close()
 
     def deleteQuestion(self, question):
-        sql = f"""DELETE FROM question WHERE username = '{question.username}'"""
+        sql = f"""DELETE FROM question WHERE id = '{question.id}'"""
         conn = None
         try:
             # Establishing the connection
@@ -56,3 +56,28 @@ class QuestionDAO():
         finally:
             if conn is not None:
                 conn.close()
+
+    # def updateQuestion(self, question):
+    
+    #     sql = f"""UPDATE question SET content = '{question.content}, correct_answer_id = '{question.id}"""
+    #     conn = None
+    #     try:
+    #         # Establishing the connection
+    #         conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+    #         # Create a cursor
+    #         cur = conn.cursor()
+    #         # Execute a statement.
+    #         cur.execute(sql)
+    #             # Fetch the id of the student created.
+    #         id = cur.fetchone()
+    #         # Close the communication with the PostgreSQL
+    #         cur.close()
+    #         # Returns the status of the commit if the change was successful.
+    #         return id[0]
+
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print("ERROR", error)
+    #         return None
+    #     finally:
+    #         if conn is not None:
+    #             conn.close()

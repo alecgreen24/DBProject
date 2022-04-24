@@ -19,49 +19,48 @@
     <!-- Main Content -->
     <div class="container" id="container">
       <!-- Configue Quiz -->
-      <div class="row" id="quizConfig">
+      <!-- <div class="row" id="quizConfig">
         <form class="col s12">
           <div class="row">
           </div>
-        </form>
+        </form> -->
     <h5> Edit Test </h5>
   
 
   
       <!-- Quiz Form -->
       <div id="formContainer" class="row hide">
-        <form id="quizForm" class="col s12">
+        <!-- <form id="quizForm" class="col s12"> -->
 
           <!-- User Input 1 -->
           <div class="row">
             <div class="input-field col s12 m6">
                 {% for question in questions %}
 
-                  <label for="{{question.id}}"></label>
+                  <!-- <label for="{{question.id}}"></label> -->
+                  <label>Question</label>
+                  <br>
                   <input name="{{question.id}}" id="{{question.id}}" value="{{question.content}}" type="text" class="validate">
+                  <br>
 
                   {% for answer in question.answers %}
-                    <input id="{{answer.id}}" value="{{ answer.content }}" type="text" class="validate">
                     <label>Option</label>
+                    <br>
+                    <input id="{{answer.id}}" value="{{ answer.content }}" type="text" class="validate">
+                    <br>
                   {% endfor %}
-                
+                    <label>Correct Answer</label>
+                    <br>
+                    <input id="answer.id" placeholder="{{ correct_answer_id.content }}" type="text" class="validate">
+                    <br>
                   {% endfor %}
             </div>
           </div>
-
-          <!--Correct Answer-->
-          <div class="row">
-            <div class="input-field col s12 m6">
-              <input id="correctValue" placeholder="Enter the correct answer. A,B,C?" type="text" class="validate">
-              <label>Correct Answer</label>
-            </div>
-          </div>
-  
           <!-- Submit Button -->
           <div id="submitBtn" class="col s6">
             <a id="submit" class="waves-effect waves-light btn-small">Add to bank</a>
           </div>
-        </form>
+        <!-- </form> -->
       </div>
     </div>
     <input type="submit" value="Submit">
