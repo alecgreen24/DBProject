@@ -7,6 +7,7 @@ from group_project.settings import *
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from multiple_choice.daos.taken import Taken
 from .daos.student_dao import *
 from .daos.student import Student
 from .daos.test_dao import *
@@ -19,6 +20,9 @@ from .daos.question_answer_dao import *
 from .daos.question_answer import QuestionAnswer
 from .daos.test_question_dao import *
 from .daos.test_question import TestQuestion
+from .daos.taken_deo import *
+from .daos.taken import Taken
+
 
 
 SDAO = StudentDAO(host=DATABASES['default']['HOST'],
@@ -42,6 +46,10 @@ QADAO = QuestionAnswerDAO(host=DATABASES['default']['HOST'],
                 user=DATABASES['default']['USER'],
                 password=DATABASES['default']['PASSWORD'])
 TQDAO = TestQuestionDAO(host=DATABASES['default']['HOST'],
+                database=DATABASES['default']['NAME'],
+                user=DATABASES['default']['USER'],
+                password=DATABASES['default']['PASSWORD'])
+TTDAO = TakenDAO(host=DATABASES['default']['HOST'],
                 database=DATABASES['default']['NAME'],
                 user=DATABASES['default']['USER'],
                 password=DATABASES['default']['PASSWORD'])
@@ -191,7 +199,7 @@ def take_test(request, test_id):
     'questions': questions,
     })
 
-def test_taken(request, test_id):
+def test_taken(request, test_id, student_id = 0):
     if request.method == "POST":
         test = TDAO.getOneTest(test_id)
         questions = TDAO.getQuestionsAndCorrectAnswer(test)
@@ -202,7 +210,13 @@ def test_taken(request, test_id):
                 correct_count += 1
         decimal = (correct_count / len(questions))
         score = "{:.0%}". format(decimal)
-        return render(request, "list.html", {"score": score})
+        new_test_taken = Taken(test = test, student_id = student_id, score = decimal)
+        TTDAO.createTaken(new_test_taken)
+        return render(request, "tests_taken.html", {
+            "score": score,
+            "test": test,
+            })
+
 
 
 def edit(request):
@@ -230,3 +244,18 @@ def tests_taken(request):
     if isAuthenticated(request):
         tests = TDAO.getAllTests()
         return render(request, "tests_taken.html", {"tests": tests})
+    
+def questions(request):
+    if isAuthenticated(request):
+        questions = QDAO.getAllQuestions()
+        if request.method == "POST":
+            for question in questions:
+                desired_question = int(request.POST.get('id'))
+                print(desired_question, question.id)
+                if desired_question == question.id:
+                    print("pizza")
+                    QDAO.deleteQuestion(question)
+            return render(request, "questions.html", {"questions": QDAO.getAllQuestions()})
+        else:
+            return render(request, "questions.html", {"questions": questions})
+    

@@ -9,7 +9,7 @@ class TakenDAO():
 
 
     def createTaken(self, taken):
-        sql = f"""INSERT INTO student VALUES(DEFAULT,'{taken.test.id}','{taken.student.id}', {taken.score}, NOW())  RETURNING id;"""
+        sql = f"""INSERT INTO taken VALUES('{taken.test.id}','{taken.student_id}', {taken.score}, NOW())  RETURNING test_id;"""
         conn = None
         try:
             # Establishing the connection
