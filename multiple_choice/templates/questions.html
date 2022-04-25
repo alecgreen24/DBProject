@@ -13,18 +13,18 @@
 <h2 class="sign" align="center">Questions</h2>
 
 <body>
-<form name="questions" method="post" action="{% url 'questions' %}">
-{% csrf_token %}
   {% for question in questions %}
-  <ul align="center">
-      <b>{{ question.content }}</b> 
-      <button type = "submit" style = "color:red" name = "id" id="{{ question.id }}" value = "{{ question.id }}">Delete</button>
-
-  </ul>
+    <form name="questions" method="post" action="{% url 'questions' %}">
+      {% csrf_token %}
+    <ul align="center">
+      <b>{{ question.content }}</b>
+      <input type="hidden" name="id" value="{{ question.id }}">
+      <button type="submit" style="color:red">Delete</button>
+    </ul>
+  </form>
   {% endfor %}
 
 
-</form>
 </body>
 
 {% endblock %}

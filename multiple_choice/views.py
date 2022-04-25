@@ -230,6 +230,7 @@ def editor(request, test_id):
     if request.method == "POST":
             for question in questions:
                 question_content = request.POST.get('content')
+                answers = []
                 correct_answer_id = request.POST.get('correct_answer')
                 old_questionID = request.POST.get('id')
                 new_question = Question(content=question_content, correct_answer_id= correct_answer_id, correct_answer="Testing")
@@ -256,12 +257,10 @@ def questions(request):
     if isAuthenticated(request):
         questions = QDAO.getAllQuestions()
         if request.method == "POST":
-            for question in questions:
-                desired_question = int(request.POST.get('id'))
-                print(desired_question, question.id)
-                if desired_question == question.id:
-                    print("pizza")
-                    QDAO.deleteQuestion(question)
+            desired_question = int(request.POST.get('id'))
+            question = Question("")
+            question.id = desired_question
+            QDAO.deleteQuestion(question)
             return render(request, "questions.html", {"questions": QDAO.getAllQuestions()})
         else:
             return render(request, "questions.html", {"questions": questions})
