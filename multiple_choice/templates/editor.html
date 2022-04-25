@@ -1,0 +1,67 @@
+{% extends "menu.html" %}
+{% load static %}
+
+{% block content %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'multiple_choice/login.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+  <title>Edit Test</title>
+
+  <h2 class="sign" align="center">Select Question to Edit</h2>
+</head>
+
+<body>
+  <form name = "quiz" method = "post" action = "{% url 'editor' test_id %}">
+    {% csrf_token %}
+    <!-- Main Content -->
+    <div class="container" id="container">
+      <!-- Configue Quiz -->
+      <!-- <div class="row" id="quizConfig">
+        <form class="col s12">
+          <div class="row">
+          </div>
+        </form> -->
+    <h5> Edit Test </h5>
+  
+
+  
+      <!-- Quiz Form -->
+      <div id="formContainer" class="row hide">
+        <!-- <form id="quizForm" class="col s12"> -->
+
+          <!-- User Input 1 -->
+          <div class="row">
+            <div class="input-field col s12 m6">
+                {% for question in questions %}
+                  <ul>
+                  <!-- <label for="{{question.id}}"></label> -->
+                  <label>Question</label>
+                  <br>
+                  <input name="content" id="{{question.id}}" value="{{question.content}}" type="text" class="validate">
+                  <br>
+                  <input name="id" id="{{question.id}}" value="{{question.id}}" type="hidden" class="validate">
+                  {% for answer in question.answers %}
+                    <label>Option</label>
+                    <br>
+                    <input name="answer" id="{{answer.id}}" value="{{ answer.content }}" type="text" class="validate">
+                    <br>
+                  {% endfor %}
+                    <label>Correct Answer</label>
+                    <br>
+                    <input id="correct_answer" value="{{ answer.correct_answer_id }}" type="text" class="validate">
+                    <br>
+                    </ul>
+                  {% endfor %}
+            </div>
+          </div>
+        <!-- </form> -->
+      </div>
+    </div>
+    <input type="submit" value="Submit">
+  </form>   
+  </body>
+
+{% endblock %}

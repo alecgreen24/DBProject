@@ -14,9 +14,9 @@
 <h2 class="sign" align="center">Select Test to Edit</h2>
 
 <body>
-  <div class="main">
-    <form class="form1">
-  </div>
-
+  {% for test in tests %}
+  <a href="{% url 'editor' test.id %}">{{test.title}} -- {{test.created_at}}</a>
+  <br>
+  {% endfor %}
 </body>
 {% endblock %}

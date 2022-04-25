@@ -227,9 +227,16 @@ def edit(request):
 def editor(request, test_id):
     test = TDAO.getOneTest(test_id)
     questions = TDAO.getQuestions(test)
-    return render(request, 'editor.html',
-    { 'test': test, 
-    'questions': questions})
+    if request.method == "POST":
+            for question in questions:
+                question_content = request.POST.get('content')
+                correct_answer_id = request.POST.get('correct_answer')
+                old_questionID = request.POST.get('id')
+                new_question = Question(content=question_content, correct_answer_id= correct_answer_id, correct_answer="Testing")
+                if(old_questionID==question.id):
+                    QDAO.deleteQuestion(question)
+                    QDAO.createQuestion(new_question)
+    return render(request, 'editor.html', {"test_id":test_id, "questions": questions})
 
 def account(request):
     return render(request, "account_info.html")

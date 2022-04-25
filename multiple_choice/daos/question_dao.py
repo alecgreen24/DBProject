@@ -15,7 +15,7 @@ class QuestionDAO():
         self.password = password
 
     def createQuestion(self, question):
-        sql = f"""INSERT INTO question VALUES(DEFAULT,'{question.content}', '{question.correct_answer_id}') RETURNING id;"""
+        sql = f"""INSERT INTO question VALUES(default, '{question.content}', '{question.correct_answer_id}') RETURNING id;"""
         conn = None
         try:
             # Establishing the connection
@@ -67,6 +67,56 @@ class QuestionDAO():
         finally:
             if conn is not None:
                 conn.close()
+
+
+    # def deleteQuestionFromID(self, id):
+    #         sql = f"""DELETE FROM question WHERE id = '{id}'"""
+    #         conn = None
+    #         try:
+    #             # Establishing the connection
+    #             conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+    #             # Create a cursor
+    #             cur = conn.cursor()
+    #             # Execute a statement.
+    #             cur.execute(sql)
+    #             # Commit the changes on the table.
+    #             conn.commit()
+    #             # Close the communication with the PostgreSQL
+    #             cur.close()
+    #             # Returns the status of the commit if the change was successful.
+    #             return "success"
+
+    #         except (Exception, psycopg2.DatabaseError) as error:
+    #             print(error)
+    #             return error
+    #         finally:
+    #             if conn is not None:
+    #                 conn.close()
+
+    # def updateQuestion(self, question):
+    
+    #     sql = f"""UPDATE question SET content = '{question.content}, correct_answer_id = '{question.id}"""
+    #     conn = None
+    #     try:
+    #         # Establishing the connection
+    #         conn = psycopg2.connect(host=self.host, database=self.database, user=self.user, password=self.password)
+    #         # Create a cursor
+    #         cur = conn.cursor()
+    #         # Execute a statement.
+    #         cur.execute(sql)
+    #             # Fetch the id of the student created.
+    #         id = cur.fetchone()
+    #         # Close the communication with the PostgreSQL
+    #         cur.close()
+    #         # Returns the status of the commit if the change was successful.
+    #         return id[0]
+
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print("ERROR", error)
+    #         return None
+    #     finally:
+    #         if conn is not None:
+    #             conn.close()
                 
     def getAllQuestions(self):
         sql = "SELECT * FROM question"
