@@ -13,19 +13,14 @@
     <form name="quiz" method="post" action="{% url 'test_taken' test.id %}">
         {% csrf_token %}
     <p>
-        <p>
-
-
-        {% for question in questions %} 
+        {% for question in questions %}
         <p id = "question">
             {{ question.content }}
             <span>
                 {% for answer in question.answers %}
-                
                 <p>
                     <input id="selection" class="with-gap" type="radio" name="{{ question.id }}" value="{{ answer.id }}"/>
-                    <span id="{{ answer.id }}">{{ answer.content }}</span>
-                    
+                    <span id="{{ answer.id }}">{{ answer.content }}
                 </p>
                 {% endfor %}
             </span>
@@ -35,5 +30,4 @@
     <input type="submit" value="Submit">
     </form>
 </body>
-
 </html>

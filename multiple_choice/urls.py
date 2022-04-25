@@ -18,4 +18,7 @@ urlpatterns = [
     path('possible_tests', views.possible_tests, name="possible_tests"),
     path('take_test/<int:test_id>', views.take_test, name="take_test"),
     path('test_taken/<int:test_id>', views.test_taken, name="test_taken"),
+    path('questions', views.questions, name="questions"),
+
+
 ]
