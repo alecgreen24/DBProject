@@ -17,8 +17,11 @@
 {% csrf_token %}
   {% for question in questions %}
   <ul align="center">
-      <b>{{ question.content }}</b> <input type = "submit" name = "id" id="{{ question.id }}" value = "{{ question.id }}"/>
+      <b>{{ question.content }}</b> <input type = "submit" title = "Delete" name = "id" id="{{ question_id }}" value = "{{ question.id }}"/>
+      <button name="id" value="{{ question.id }}" type="submit">Delete</button>
 
+    <label for= "submit">Delete</label>
+  </input>
   </ul>
   {% endfor %}
 

@@ -251,9 +251,7 @@ def questions(request):
         if request.method == "POST":
             for question in questions:
                 desired_question = int(request.POST.get('id'))
-                print(desired_question, question.id)
                 if desired_question == question.id:
-                    print("pizza")
                     QDAO.deleteQuestion(question)
             return render(request, "questions.html", {"questions": QDAO.getAllQuestions()})
         else:
