@@ -1,8 +1,9 @@
 from .connector import *
 import numpy as np
 from .test import Test
-from .question import Question
 from .answer import Answer
+from .question import Question
+
 
 class TestDAO():
     def __init__(self, host, database, user, password):

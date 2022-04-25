@@ -1,0 +1,29 @@
+{% extends "menu.html" %}
+{% load static %}
+
+{% block content%}
+
+<head>
+  <link rel="stylesheet" href="{% static 'multiple_choice/login.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in</title>
+</head>
+
+<h2 class="sign" align="center">Questions</h2>
+
+<body>
+<form name="questions" method="post" action="{% url 'questions' %}">
+{% csrf_token %}
+  {% for question in questions %}
+  <ul align="center">
+      <b>{{ question.content }}</b> <input type = "submit" name = "id" id="{{ question.id }}" value = "{{ question.id }}"/>
+
+  </ul>
+  {% endfor %}
+
+
+</form>
+</body>
+
+{% endblock %}
